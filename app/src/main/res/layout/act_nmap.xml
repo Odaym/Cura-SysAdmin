@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/TableLayout01"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dip" >
+
+    <LinearLayout
+        android:id="@+id/targetLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip" >
+
+        <com.cura.classes.TypefacedTextView
+            android:id="@+id/targetLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/targetLabel"
+            custom:typeface="CuraFont" />
+
+        <com.cura.classes.TypefacedTextView
+            android:id="@+id/targetTV"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:inputType="text"
+            custom:typeface="CuraFont" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/argumentsLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip" >
+
+        <com.cura.classes.TypefacedTextView
+            android:id="@+id/argumentsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/argumentsLabel"
+            custom:typeface="CuraFont" />
+
+        <com.cura.classes.TypefacedEditText
+            android:id="@+id/argumentsET"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="text"
+            android:lines="1"
+            custom:typeface="CuraFont" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/commandsLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip" >
+
+        <Spinner
+            android:id="@+id/binariesCommandSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Spinner
+            android:id="@+id/outputCommandSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+        </Spinner>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/helpStartLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip" >
+
+        <com.cura.classes.TypefacedButton
+            android:id="@+id/helpBTN"
+            style="@style/savelogs_button_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dip"
+            android:layout_weight="2"
+            android:text="@string/Help"
+            android:textSize="14sp"
+            custom:typeface="CuraFont" />
+
+        <com.cura.classes.TypefacedButton
+            android:id="@+id/startBTN"
+            style="@style/positive_buttons_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="@string/start"
+            android:textSize="14sp"
+            custom:typeface="CuraFont" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/ScrollView01"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dip" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <com.cura.classes.TypefacedTextView
+                android:id="@+id/results"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text|textMultiLine"
+                android:scrollbars="vertical"
+                android:text="@string/nmapWarning"
+                custom:typeface="CuraFont" />
+
+            <com.cura.classes.TypefacedButton
+                android:id="@+id/saveNmapResults"
+                style="@style/savelogs_button_style"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dip"
+                android:layout_marginLeft="50dip"
+                android:layout_marginRight="50dip"
+                android:layout_marginTop="20dip"
+                android:text="@string/nmapSaveButtonText"
+                android:textSize="14sp"
+                android:visibility="invisible"
+                custom:typeface="CuraFont" />
+        </LinearLayout>
+    </ScrollView>
+
+</TableLayout>

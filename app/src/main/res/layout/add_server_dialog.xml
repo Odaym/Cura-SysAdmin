@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <com.cura.classes.TypefacedTextView
+            android:id="@+id/usernameLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/usernameLabel"
+            android:textSize="16sp"
+            custom:typeface="CuraFont" />
+
+        <com.cura.classes.TypefacedEditText
+            android:id="@+id/usernameTextField"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/usernameLabel"
+            android:maxLines="1"
+            custom:typeface="CuraFont" />
+
+        <requestFocus />
+
+        <com.cura.classes.TypefacedTextView
+            android:id="@+id/domainLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/usernameTextField"
+            android:layout_marginTop="5dp"
+            android:text="@string/domainLabel"
+            android:textSize="16sp"
+            custom:typeface="CuraFont" />
+
+        <com.cura.classes.TypefacedEditText
+            android:id="@+id/domainTextField"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/domainLabel"
+            android:layout_gravity="fill_horizontal"
+            android:hint="@string/domainTextFieldHint"
+            android:maxLines="1"
+            custom:typeface="CuraFont" />
+
+        <com.cura.classes.TypefacedTextView
+            android:id="@+id/portLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/domainTextField"
+            android:layout_marginTop="5dp"
+            android:text="@string/portTextField"
+            android:textSize="16sp"
+            custom:typeface="CuraFont" />
+
+        <com.cura.classes.TypefacedEditText
+            android:id="@+id/portTextField"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/portLabel"
+            android:layout_marginBottom="5dp"
+            android:inputType="number"
+            android:maxLines="1"
+            android:text="22"
+            custom:typeface="CuraFont" />
+
+        <com.cura.classes.TypefacedTextView
+            android:id="@+id/privateKeyLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/portTextField"
+            android:text="@string/privateKeyTextField"
+            android:textSize="16sp"
+            custom:typeface="CuraFont" />
+
+        <LinearLayout
+            android:id="@+id/privateKeyInputLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/privateKeyLabel"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal" >
+
+            <com.cura.classes.TypefacedEditText
+                android:id="@+id/privateKeyTextField"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:editable="false"
+                android:maxLines="1"
+                custom:typeface="CuraFont" />
+
+            <Button
+                android:id="@+id/browsePrivKeyBTN"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/browse_privkey_select" />
+        </LinearLayout>
+
+        <com.cura.classes.TypefacedButton
+            android:id="@+id/addOrModifyBTN"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/privateKeyInputLayout"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/positive_button_select"
+            custom:typeface="CuraFont" />
+
+        <com.cura.classes.TypefacedButton
+            android:id="@+id/cancelBTN"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/addOrModifyBTN"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/kill_button_select"
+            android:text="@string/cancel"
+            custom:typeface="CuraFont" />
+    </RelativeLayout>
+
+</ScrollView>

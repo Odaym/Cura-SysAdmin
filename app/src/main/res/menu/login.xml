@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:onClick="menu_Settings"
+        android:orderInCategory="200"
+        android:showAsAction="collapseActionView"/>
+    <item
+        android:icon="@android:drawable/ic_dialog_info"
+        android:onClick="menu_About"
+        android:orderInCategory="300"
+        android:showAsAction="collapseActionView"/>
+
+</menu>

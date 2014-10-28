@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <com.cura.classes.TypefacedTextView
+            android:id="@+id/logsView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dip"
+            custom:typeface="CuraFont" />
+
+        <com.cura.classes.TypefacedButton
+            android:id="@+id/closeLogsDialog"
+            style="@style/kill_button_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dip"
+            android:text="@string/closeLogs"
+            android:textSize="14sp"
+            custom:typeface="CuraFont" />
+    </LinearLayout>
+
+</ScrollView>

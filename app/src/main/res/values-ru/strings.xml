@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Cura</string>
+
+    <!-- Global -->
+    <string name="serviceDisconnected">Услуга отключена</string>
+    <string name="logout">Выйти</string>
+    <string name="ok">ОК</string>
+    <string name="cancel">Отменить</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="connectionTimeout">Время ожидания подключения истекло</string>
+    <string name="connectionTimeoutMessage">Время ожидания подключения истекло. Пожалуйста, проверьте соединение с сетью интернет.\nВы будете перенаправлены на страницу входа в приложение Cura.</string>
+
+    <!-- App Rater -->
+    <string name="rate">Оценить</string>
+    <string name="rateCura">Оценить Cura</string>
+    <string name="maybeLater">Позже</string>
+    <string name="noThanks">Нет, спасибо</string>
+    <string name="rateDialogString">Если вам понравилось приложение Cura, пожалуйста, выделите минутку, чтобы оценить его. Спасибо за вашу поддержку!</string>
+
+    <!-- Login Activity - Home screen -->
+    <string name="loginText">CURA позволяет управлять серверами UNIX на вашем устройстве Android</string>
+    <string name="DialogTitle">Введите учетные данные</string>
+    <string name="addNewServer">Добавить новый сервер</string>
+    <string name="connect">Войти</string>
+    <string name="connectsThrough">подключается через порт</string>
+    <string name="newServer">НОВЫЙ СЕРВЕР</string>
+    <string name="selectServer">ВЫБРАТЬ СЕРВЕР</string>
+    <string name="selectServerTitle">Выбрать сервер</string>
+    <string name="editServer">Изменить</string>
+    <string name="applyEditServer">Применить</string>
+    <string name="deleteServer">Удалить</string>
+    <string name="home">Главная</string>
+    <string name="noServersYet">Вы еще не добавил серверов</string>
+    <string name="logoutConfirmationContent">Выйти из этого сервера?</string>
+    <string name="logoutConfirmationTitle">Подтверждение выхода</string>
+    <string name="checkBoxSysLogs">Номера строк</string>
+    <string name="addServerHint">Это лишь образец аккаунта сервера.</string>
+    <string name="credentialsWrong">Неверная комбинация имени пользователя/пароля. Пожалуйста, попробуйте ещё раз!</string>
+    <string name="LoginScreenPasswordPrompt">Ввести пароль UNIX</string>
+    <string name="serverExists">Аккаунт сервера уже существует!</string>
+    <string name="portError">Введен слишком длинный порт. Значение порта должно быть \"22\"</string>
+    <string name="connecting">Подключение...</string>
+    <string name="portErrorModify">Введен слишком длинный порт.</string>
+    <string name="loader_message">Статистика извлекается из сервера. Пожалуста, подождите...</string>
+    <string name="login">Войти</string>
+    <string name="savePassword">Сохранить пароль</string>
+
+    <!-- Main Activity  - Hosting the 5 tabs -->
+    <string name="ServerStatsLabel">Статистика сервера</string>
+    <string name="TerminalLabel">Терминал</string>
+    <string name="SysLogLabel">SysLog</string>
+    <string name="controlCenter">Центр управления</string>
+    <string name="SysMonitorLabel">SysMonitor</string>
+    <string name="NMapLabel">NMap</string>
+    <string name="usernameLabel">Имя пользователя</string>
+    <string name="domainLabel">Домен</string>
+    <string name="portLabel">Порт</string>
+    <string name="domainTextFieldHint">напр.: local.domain.com</string>
+    <string name="portTextField">Номер порта</string>
+
+    <!-- Server Stats - 1st Tab -->
+    <string name="hostname">Имя хоста</string>
+    <string name="listeningIP">Слушающий IP:</string>
+    <string name="killprocess">ОСТАНОВИТЬ ПРОЦЕСС</string>
+    <string name="systemVitals">ОСНОВНЫЕ ДАННЫЕ СИСТЕМЫ</string>
+    <string name="mountedFilesystems">СМОНТИРОВАННЫЕ ФАЙЛОВЫЕ СИСТЕМЫ</string>
+    <string name="memoryUsage">ИСПОЛЬЗОВАНИЕ ПАМЯТИ</string>
+    <string name="processesStatus">СТАТУС ПРОЦЕССА</string>
+    <string name="kernelVersion">Версия ядра:</string>
+    <string name="uptime">Время работы:</string>
+    <string name="lastBoot">Последняя загрузка:</string>
+    <string name="totalMemory">Общий объем памяти:</string>
+    <string name="usedMemory">% Uиспользуемый:</string>
+    <string name="freeMemory"> % Fсвободно:</string>
+    <string name="currentUsers">Текущие пользователи:</string>
+    <string name="loadAverages">Средняя загрузка:</string>
+    <string name="pickProcess">Выбрать процесс</string>
+
+    <!-- Syslog Activity - 2nd Tab -->
+    <string name="SysLogLineNumberprompt">Пожалуйста, введите количество строк</string>
+    <string name="SysLogNoLogsFoundprompt">Нет журналов для отображения \n(Возникла проблема с разрешениями или файл журнала не существует на вашем сервере)</string>
+    <string name="syslogTitleMessage">Просматривайте журналы входа прямо с вашего сервера (по умолчанию: 10 строк)</string>
+    <string name="sysLogButtonText">ПОЛУЧИТЬ ЖУРНАЛЫ</string>
+    <string name="fetchingLogs">Извлечение журналов...</string>
+    <string name="closeLogs">Закрыть</string>
+    <string name="sysLogSaveLogsButtonText">СОХРАНИТЬ ЖУРНАЛЫ</string>
+    <string name="logsSaved">Журналы сохранены в каталоге Cura</string>
+    <string name="noLogsFoundTitle">Журналы не найдены</string>
+    <string name="noLogsFoundContent">Файл не найден на сервере или у приложения Cura нет разрешения на чтение его содержимого.</string>
+    <string name="logsFromTitle">Журналы входа с</string>
+    <string name="savingLogs">Сохранение журналов...</string>
+    <string name="resultsNotSaved">Результаты не сохранены</string>
+
+    <!-- NMAP Activty - 4th Tab -->
+    <string name="nmapWarning">ПРЕДУПРЕЖДЕНИЕ: Пожалуйста, обратите внимание на то, что Nmap может функционировать не так, как ожидалось. В зависимости от вашего устройства и от сервера, к которому вы подключены, некоторые необходимые Nmap возможности SU или конкретные операции записи могут быть недоступны (например, Nexus 5, Nexus 7)</string>
+    <string name="nmapSaveButtonText">СОХРАНИТЬ РЕЗУЛЬТАТЫ</string>
+    <string name="nmapResultsSaved">Результаты сохранены в каталоге Cura</string>
+    <string name="argumentsLabel">Параметры:</string>
+    <string name="pleaseWaitNmap">Сканирование Nmap может занять некоторое время. Пожалуйста, подождите.</string>
+    <string name="targetLabel">Объект:</string>
+    <string name="initializing">Инициализация...</string>
+    <string name="Help">Помощь</string>
+    <string name="start">Старт</string>
+
+    <!-- Terminal - 5th (Last) Tab -->
+    <string name="execute">Исполн.</string>
+
+    <!-- Settings Activity -->
+    <string name="notificationCategory">Уведомления</string>
+    <string name="settings">Настройки</string>
+
+    <!-- About Activity -->
+    <string name="about">О приложении</string>
+    <string name="appInformationTitle">Информация о приложении</string>
+    <string name="authorTitle">Автор</string>
+    <string name="authorContent">Думайте дважды, кодируйте всего раз</string>
+    <string name="versionTitle">Версия</string>
+    <string name="versionContent">2.7</string>
+    <string name="contactInformationTitle">Контактная информация</string>
+    <string name="followUs">следуйте за нами</string>
+    <string name="emailTitle">E-mail</string>
+    <string name="emailContent">Отправьте ваш отзыв по электронной почте</string>
+    <string name="appEmail">cura.app\@gmail.com</string>
+
+</resources>

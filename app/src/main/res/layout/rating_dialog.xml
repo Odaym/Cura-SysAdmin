@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:orientation="vertical" >
+
+    <com.cura.classes.TypefacedTextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/rateDialogString"
+        custom:typeface="CuraFont" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="20dp" >
+
+        <com.cura.classes.TypefacedButton
+            android:id="@+id/rateNowBTN"
+            style="@style/positive_buttons_style"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="@string/rateCura"
+            android:textSize="15sp"
+            custom:typeface="CuraFont" />
+
+        <com.cura.classes.TypefacedButton
+            android:id="@+id/remindBTN"
+            style="@style/savelogs_button_style"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rateNowBTN"
+            android:layout_marginBottom="20dp"
+            android:text="@string/maybeLater"
+            android:textSize="15sp"
+            custom:typeface="CuraFont" />
+
+        <com.cura.classes.TypefacedButton
+            android:id="@+id/nothanksBTN"
+            style="@style/kill_button_style"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/remindBTN"
+            android:text="@string/noThanks"
+            android:textSize="15sp"
+            custom:typeface="CuraFont" />
+    </RelativeLayout>
+
+</LinearLayout>

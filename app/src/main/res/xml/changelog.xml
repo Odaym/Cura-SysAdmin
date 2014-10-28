@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<changelog>
+	<release version="0.1.0" notes="Initial Release"></release>
+	<release version="0.1.1" notes="fixed a minor issue where the installation failed because it was installing directly to /data/local/bin/ instead of going to /sdcard/com.wjholden.nmap/ then copying like the original design."></release>
+	<release version="0.1.2" notes="another minor bug that prevented proper installation because slashes weren't correctly being appended to directory names."></release>
+	<release version="0.1.3" notes="MAJOR bugfix, wasn't taking trailing '/' on /data/local/bin/ preventing proper installation on G-1."></release>
+	<release version="0.1.4" notes="removed all ads; thank you for your purchase! - makes sure worker threads only execute once and close correctly."></release>
+	<release version="0.2.0" notes="HUGE update - now works on non-rooted phones! Also nmap-mac-prefixes bug (should) be fixed now."></release>
+</changelog>

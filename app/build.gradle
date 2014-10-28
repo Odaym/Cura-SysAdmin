@@ -1,0 +1,40 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "20.0.0"
+
+    defaultConfig {
+        applicationId "com.cura"
+        minSdkVersion 11
+        targetSdkVersion 19
+    }
+
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE.txt'
+    }
+}
+
+dependencies {
+    compile files('libs/FlurryAnalytics-4.1.0.jar')
+    compile files('libs/HockeySDK-3.0.1.jar')
+    compile files('libs/achartengine-0.7.0.jar')
+    compile files('libs/activation.jar')
+    compile files('libs/additionnal.jar')
+    compile files('libs/commons-io-2.1.jar')
+    compile files('libs/commons-lang3-3.1.jar')
+    compile files('libs/jasypt-1.9.0.jar')
+    compile files('libs/jsch-0.1.44.jar')
+    compile files('libs/jzlib-1.07.jar')
+    compile files('libs/libGoogleAnalyticsServices.jar')
+    compile 'com.android.support:support-v4:21.0.0+'
+    compile 'com.google.android.gms:play-services:4.0+'
+}

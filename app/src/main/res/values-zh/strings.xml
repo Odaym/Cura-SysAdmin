@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?><resources>
+
+    <string name="app_name">Cura</string>
+
+    <!-- Global -->
+    <string name="serviceDisconnected">服务连接断开</string>
+    <string name="logout">注销</string>
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+    <string name="connectionTimeout">连接超时</string>
+    <string name="connectionTimeoutMessage">连接超时，请检查您的网络或互联网连接。\n 您将重新返回到 Cura 的登录界面。</string>
+
+    <!-- App Rater -->
+    <string name="rate">率</string>
+    <string name="rateCura">Cura 率</string>
+    <string name="maybeLater">稍后再说</string>
+    <string name="noThanks">不，谢谢</string>
+    <string name="rateDialogString">如果您喜欢使用 Cura，请花一点时间来评价它。谢谢您的支持！</string>
+
+    <!-- Login Activity - Home screen -->
+    <string name="loginText">CURA 允许您通过 Andr​​oid 设备管理 UNIX 服务器</string>
+    <string name="DialogTitle">输入证书</string>
+    <string name="addNewServer">添加新服务器</string>
+    <string name="connect">登录</string>
+    <string name="connectsThrough">通过端口连接</string>
+    <string name="newServer">新服务器</string>
+    <string name="selectServer">选择服务器</string>
+    <string name="selectServerTitle">选择服务器</string>
+    <string name="editServer">编辑</string>
+    <string name="applyEditServer">填充</string>
+    <string name="deleteServer">删除</string>
+    <string name="home">主页</string>
+    <string name="logoutConfirmationContent">从该服务器注销？</string>
+    <string name="logoutConfirmationTitle">注销确认</string>
+    <string name="checkBoxSysLogs">行号：</string>
+    <string name="addServerHint">这仅仅是一个示例服务器帐户。</string>
+    <string name="credentialsWrong">错误的用户名/密码组合，请重试！</string>
+    <string name="LoginScreenPasswordPrompt">输入 UNIX 口令</string>
+    <string name="serverExists">服务器帐户已经存在！</string>
+    <string name="portError">输入的端口太长，端口设置为 \'22\'</string>
+    <string name="connecting">连接中...</string>
+    <string name="portErrorModify">输入的端口太长</string>
+    <string name="loader_message">正在从服务器获取数据，请稍候...</string>
+    <string name="login">登录</string>
+    <string name="savePassword">保存密码</string>
+
+    <!-- Main Activity  - Hosting the 5 tabs -->
+    <string name="ServerStatsLabel">服务器数据</string>
+    <string name="TerminalLabel">终端</string>
+    <string name="SysLogLabel">系统日志</string>
+    <string name="controlCenter">控制中心</string>
+    <string name="SysMonitorLabel">SysMonitor</string>
+    <string name="NMapLabel">NMap</string>
+    <string name="usernameLabel">用户名</string>
+    <string name="domainLabel">域名</string>
+    <string name="portLabel">端口</string>
+    <string name="domainTextFieldHint">例如：local.domain.com</string>
+    <string name="portTextField">端口号</string>
+
+    <!-- Server Stats - 1st Tab -->
+    <string name="hostname">主机名：</string>
+    <string name="listeningIP">侦听 IP：</string>
+    <string name="killprocess">结束进程</string>
+    <string name="systemVitals">系统命脉</string>
+    <string name="mountedFilesystems">已安装的文件系统</string>
+    <string name="memoryUsage">存储器使用情况</string>
+    <string name="processesStatus">进程状态</string>
+    <string name="kernelVersion">内核版本：</string>
+    <string name="uptime">运行时间：</string>
+    <string name="lastBoot">上次启动：</string>
+    <string name="totalMemory">总内存：</string>
+    <string name="usedMemory">% 旧：</string>
+    <string name="freeMemory">% 免费：</string>
+    <string name="currentUsers">当前用户：</string>
+    <string name="loadAverages">平均负载：</string>
+    <string name="pickProcess">选择一个进程</string>
+
+    <!-- Syslog Activity - 2nd Tab -->
+    <string name="SysLogLineNumberprompt">请输入行数</string>
+    <string name="SysLogNoLogsFoundprompt">没有日志显示在这里\n（这可能是由于权限问题，或者日志文件不在服务器上）</string>
+    <string name="syslogTitleMessage">直接从您的服务器读取日志（默认值：10线）</string>
+    <string name="sysLogButtonText">获取日志</string>
+    <string name="fetchingLogs">获取日志...</string>
+    <string name="closeLogs">关闭</string>
+    <string name="sysLogSaveLogsButtonText">保存日志</string>
+    <string name="logsSaved">根据保存在库拉索目录中的日志</string>
+    <string name="noLogsFoundTitle">没有找到记录</string>
+    <string name="noLogsFoundContent">无论是服务器上找不到文件或 Cura 不被允许读取其内容。</string>
+    <string name="logsFromTitle">日志</string>
+    <string name="savingLogs">保存日志...</string>
+    <string name="resultsNotSaved">结果不保存</string>
+
+    <!-- NMAP Activty - 4th Tab -->
+    <string name="nmapWarning">免责声明：请注意，Nmap 不能保证正常工作。根据您的设​​备和您连接到服务器上，所需要的 SU 能力，或者需要特定的 Nmap 写入操作可能不会提供（如，Nexus 5、Nexus 7）</string>
+    <string name="nmapSaveButtonText">保存结果</string>
+    <string name="nmapResultsSaved">结果保存在 Cura 目录下</string>
+    <string name="argumentsLabel">论点：</string>
+    <string name="pleaseWaitNmap">请稍候，Nmap 的扫描可能需要一段时间。</string>
+    <string name="targetLabel">目标：</string>
+    <string name="initializing">初始化...</string>
+    <string name="Help">帮助</string>
+    <string name="start">开始</string>
+
+    <!-- Terminal - 5th (Last) Tab -->
+    <string name="execute">执行</string>
+
+    <!-- Settings Activity -->
+    <string name="notificationCategory">通知</string>
+    <string name="settings">设置</string>
+
+    <!-- About Activity -->
+    <string name="about">关于</string>
+    <string name="appInformationTitle">应用程序信息</string>
+    <string name="authorTitle">作者</string>
+    <string name="authorContent">Think Twice Code Once</string>
+    <string name="versionTitle">版本</string>
+    <string name="versionContent">2.7</string>
+    <string name="contactInformationTitle">联系信息</string>
+    <string name="followUs">跟随我们</string>
+    <string name="emailTitle">邮件</string>
+    <string name="emailContent">将您的反馈通过邮件告诉我们</string>
+    <string name="appEmail">cura.app \@ gmail.com</string>
+
+</resources>

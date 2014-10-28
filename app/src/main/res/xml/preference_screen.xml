@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <PreferenceCategory android:title="@string/notificationCategory" >
+        <ListPreference android:entries="@array/timeIntervals"
+            android:entryValues="@array/timeIntervalsValues"
+            android:title="Login Watcher"
+            android:key="minutes"
+            android:defaultValue="0" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

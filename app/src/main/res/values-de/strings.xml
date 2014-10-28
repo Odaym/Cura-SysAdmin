@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Cura</string>
+
+    <!-- Global -->
+    <string name="serviceDisconnected">Service getrennt</string>
+    <string name="logout">Abmelden</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
+    <string name="connectionTimeout">Verbindungstimeout</string>
+    <string name="connectionTimeoutMessage">Verbindungstimeout. Überprüfen Sie bitte Ihre Netzwerk- oder Internetverbindnung.\n Sie werden zum Anmeldefenster von Cura umgeleitet.</string>
+
+    <!-- App Rater -->
+    <string name="rate">Bewerten</string>
+    <string name="rateCura">Cura bewerten</string>
+    <string name="maybeLater">Vielleicht später</string>
+    <string name="noThanks">Nein danke</string>
+    <string name="rateDialogString">Wenn Ihnen Cura gefällt, nehmen Sie sich bitte einen Moment Zeit, um die Software zu bewerten. Vielen Dank für Ihre Unterstützung!</string>
+
+    <!-- Login Activity - Home screen -->
+    <string name="loginText">Mit CURA können Sie UNIX-Server \nvon Ihrem Android-Gerät aus verwalten.</string>
+    <string name="DialogTitle">Anmeldeinformationen eingeben</string>
+    <string name="addNewServer">Neuen Server hinzufügen</string>
+    <string name="connect">Login</string>
+    <string name="newServer">NEUER SERVER</string>
+    <string name="selectServer">SERVER WÄHLEN</string>
+    <string name="selectServerTitle">Sever wählen</string>
+    <string name="editServer">Bearbeiten</string>
+    <string name="applyEditServer">Übernehmen</string>
+    <string name="deleteServer">Löschen</string>
+    <string name="home">Startseite</string>
+    <string name="noServersYet">Sie haben noch nicht alle Server hinzugefügt</string>
+    <string name="logoutConfirmationContent">Von diesem Server abmelden?</string>
+    <string name="logoutConfirmationTitle">Abmeldebestätigung</string>
+    <string name="checkBoxSysLogs">Zeilennummern:</string>
+    <string name="addServerHint">Dies ist nur ein Beispiel für ein Serverkonto.</string>
+    <string name="credentialsWrong">Benutzername/Passwort falsch. Bitte versuchen Sie es erneut!</string>
+    <string name="LoginScreenPasswordPrompt">UNIX-Passwort eingeben</string>
+    <string name="serverExists">Serverkonto ist bereits vorhanden!</string>
+    <string name="portError">Der eingegebene Port ist zu lang. Port auf \'22\' eingestellt.</string>
+    <string name="connecting">Verbindung wird hergestellt ...</string>
+    <string name="portErrorModify">Der eingegebene Port ist zu lang.</string>
+    <string name="loader_message">Bitte warten Sie, während die Statistiken vom Server abgerufen werden ...</string>
+    <string name="login">Anmelden</string>
+    <string name="savePassword">Passwort speichern</string>
+
+    <!-- Main Activity  - Hosting the 5 tabs -->
+    <string name="ServerStatsLabel">Serverstatistiken</string>
+    <string name="TerminalLabel">Terminal</string>
+    <string name="SysLogLabel">Systemprotokoll</string>
+    <string name="controlCenter">Kontrollzentrum</string>
+    <string name="SysMonitorLabel">Systemmonitor</string>
+    <string name="NMapLabel">NMap</string>
+    <string name="usernameLabel">Benutzername</string>
+    <string name="domainLabel">Domain</string>
+    <string name="portLabel">Port</string>
+    <string name="domainTextFieldHint">ex: local.domain.com</string>
+    <string name="portTextField">Portnummer</string>
+
+    <!-- Server Stats - 1st Tab -->
+    <string name="hostname">Hostname:</string>
+    <string name="listeningIP">Listening-IP:</string>
+    <string name="killprocess">PROZESS ABBRECHEN</string>
+    <string name="systemVitals">WICHTIGE SYSTEMWERTE</string>
+    <string name="mountedFilesystems">Eingebundenes Dateisystem</string>
+    <string name="memoryUsage">SPEICHERNUTZUNG</string>
+    <string name="processesStatus">STATUS DER PROZESSE</string>
+    <string name="kernelVersion">Kernel-Version:</string>
+    <string name="uptime">Betriebszeit:</string>
+    <string name="lastBoot">Zuletzt gestartet:</string>
+    <string name="totalMemory">Gesamtspeicher:</string>
+    <string name="usedMemory">% Used:</string>
+    <string name="freeMemory">% Free:</string>
+    <string name="currentUsers">Aktuelle Benutzer:</string>
+    <string name="loadAverages">Ladungsmittelwerte:</string>
+    <string name="pickProcess">Wählen Sie einen Prozess.</string>
+
+    <!-- Syslog Activity - 2nd Tab -->
+    <string name="SysLogLineNumberprompt">Bitte geben Sie die Anzahl der Zeilen ein.</string>
+    <string name="SysLogNoLogsFoundprompt">Keine Protokolle werden hier angezeigt.\n(Es gab entweder ein Problem mit den Berechtigungen oder die Protokolldatei ist nicht auf Ihrem Server vorhanden.)</string>
+    <string name="syslogTitleMessage">Protokolle direkt von Ihrem Server aus lesen (Standard: 10 Zeilen).</string>
+    <string name="sysLogButtonText">PROTOKOLLE ABRUFEN</string>
+    <string name="fetchingLogs">Protokolle werden abgerufen...</string>
+    <string name="closeLogs">Schließen</string>
+    <string name="sysLogSaveLogsButtonText">PROTOKOLLE SPEICHERN</string>
+    <string name="logsSaved">Protokolle im Cura-Verzeichnis gespeichert unter</string>
+    <string name="noLogsFoundTitle">Keine Protokolle gefunden</string>
+    <string name="noLogsFoundContent">Entweder wurde die Datei nicht auf dem Server gefunden oder Cura war nicht berechtigt, deren Inhalt zu lesen.</string>
+    <string name="logsFromTitle">Protokolle aus</string>
+    <string name="savingLogs">Protokolle werden gespeichert...</string>
+    <string name="resultsNotSaved">Ergebnisse nicht gespeichert</string>
+
+    <!-- NMAP Activty - 4th Tab -->
+    <string name="nmapWarning">VERZICHT: Bitte beachten Sie, dass nicht garantiert wird, dass Nmap wie erwartet funktioniert. Abhängig von Ihrem Gerät und dem Server, mit dem Sie verbunden sind, können erforderliche SU-Fähigkeiten oder besondere von Nmap benötigte Schreiboperationen nicht geleistet werden durch (z. B. Nexus 5, Nexus 7)</string>
+    <string name="nmapSaveButtonText">ERGEBNISSE SPEICHERN</string>
+    <string name="nmapResultsSaved">Ergebnisse im Cura-Verzeichnis gespeichert unter</string>
+    <string name="argumentsLabel">Argumente:</string>
+    <string name="pleaseWaitNmap">Bitte warten Sie. Ein Nmap-Scan kann eine Weile dauern.</string>
+    <string name="targetLabel">Ziel:</string>
+    <string name="initializing">Wird gestartet...</string>
+    <string name="Help">Hilfe</string>
+    <string name="start">Start</string>
+
+    <!-- Terminal - 5th (Last) Tab -->
+    <string name="execute">Ausführen</string>
+
+    <!-- Settings Activity -->
+    <string name="notificationCategory">Benachrichtigungen</string>
+    <string name="settings">Einstellungen</string>
+
+    <!-- About Activity -->
+    <string name="about">Über</string>
+    <string name="appInformationTitle">Anwendungsinformationen</string>
+    <string name="authorTitle">Autor</string>
+    <string name="authorContent">Zweimal nachdenken, einmal kodieren.</string>
+    <string name="versionTitle">Version</string>
+    <string name="versionContent">2.7</string>
+    <string name="contactInformationTitle">Kontaktinformationen</string>
+    <string name="followUs">folgen Sie uns</string>
+    <string name="emailTitle">E-Mail</string>
+    <string name="emailContent">E-mailen Sie uns Ihr Feedback.</string>
+    <string name="appEmail">cura.app\@gmail.com</string>
+
+</resources>

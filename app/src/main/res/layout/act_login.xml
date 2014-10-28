@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="left">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:custom="http://schemas.android.com/apk/res-auto"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/curalogo" />
+
+        <com.cura.classes.TypefacedTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dip"
+            android:gravity="center"
+            android:text="@string/loginText"
+            android:textSize="14dip"
+            android:textStyle="italic"
+            custom:typeface="CuraFont" />
+
+        <ImageView
+            android:id="@+id/server"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="40dip"
+            android:src="@drawable/serveroffline" />
+
+        <com.cura.classes.TypefacedTextView
+            android:id="@+id/connecting"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/connecting"
+            android:textColor="#7AC65D"
+            android:textSize="14dip"
+            android:textStyle="bold|italic"
+            android:visibility="invisible"
+            custom:typeface="CuraFont" />
+
+        <LinearLayout
+            android:id="@+id/buttonsLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.cura.classes.TypefacedButton
+                android:id="@+id/selectServer"
+                style="@style/positive_buttons_style"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dip"
+                android:layout_marginRight="20dip"
+                android:layout_weight="1"
+                android:textSize="13sp" />
+
+            <com.cura.classes.TypefacedButton
+                android:id="@+id/newServer"
+                style="@style/positive_buttons_style"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dip"
+                android:layout_marginRight="20dip"
+                android:layout_weight="1"
+                android:textSize="13sp"
+                custom:typeface="CuraFont" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/drawer_container"
+        android:layout_width="@dimen/drawer_width"
+        android:layout_height="match_parent"
+        android:layout_gravity="left">
+
+        <FrameLayout
+            android:id="@+id/drawer_content_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ExpandableListView
+                android:id="@+id/expandDrawerList"
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="left"
+                android:choiceMode="singleChoice"
+                android:dividerHeight="0dp"
+                android:groupIndicator="@null" />
+        </FrameLayout>
+    </FrameLayout>
+</android.support.v4.widget.DrawerLayout>

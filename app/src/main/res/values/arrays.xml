@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="languageArray">
+        <item>Arabic</item>
+        <item>English</item>
+        <item>German</item>
+        <item>Greek</item>
+    </string-array>
+    <string-array name="languageValue">
+        <item>ar</item>
+        <item>en</item>
+        <item>ge</item>
+        <item>gr</item>
+    </string-array>
+    <string-array name="timeIntervals">
+        <item>Never watch</item>
+        <item>30 seconds</item>
+        <item>3 minutes</item>
+        <item>5 minutes</item>
+        <item>10 minutes</item>
+    </string-array>
+    <string-array name="timeIntervalsValues">
+        <item>0</item>
+        <item>30000</item>
+        <item>180000</item>
+        <item>300000</item>
+        <item>600000</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TableRow
+        android:id="@+id/row"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <com.cura.classes.TypefacedTextView
+                android:id="@+id/titleTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dip"
+                android:layout_marginTop="10dip"
+                android:maxLines="1"
+                custom:typeface="CuraFont" />
+
+            <com.cura.classes.TypefacedTextView
+                android:id="@+id/subtitleTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dip"
+                android:layout_marginLeft="15dip"
+                android:layout_marginTop="5dip"
+                android:textColor="#528b12"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                custom:typeface="CuraFont" />
+        </LinearLayout>
+    </TableRow>
+
+</TableLayout>

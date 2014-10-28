@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="typeface" format="enum">
+        <enum name="CuraFont" value="0" />
+    </attr>
+
+    <declare-styleable name="TypefacedTextView">
+        <attr name="typeface" />
+    </declare-styleable>
+    <declare-styleable name="TypefacedButton">
+        <attr name="typeface" />
+    </declare-styleable>
+    <declare-styleable name="TypefacedEditText">
+        <attr name="typeface" />
+    </declare-styleable>
+    <declare-styleable name="TypefacedCheckbox">
+        <attr name="typeface" />
+    </declare-styleable>
+
+</resources>

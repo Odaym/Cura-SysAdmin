@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TableRow
+        android:id="@+id/row"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <com.cura.classes.TypefacedTextView
+                android:id="@+id/userAndDomain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:textSize="20dip"
+                custom:typeface="CuraFont" />
+
+            <com.cura.classes.TypefacedTextView
+                android:id="@+id/port"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="port"
+                custom:typeface="CuraFont" />
+        </LinearLayout>
+    </TableRow>
+
+</TableLayout>

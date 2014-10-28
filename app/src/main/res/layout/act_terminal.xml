@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/terminalLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_margin="10dp"
+    android:orientation="vertical" >
+
+    <com.cura.classes.TypefacedTextView
+        android:id="@+id/userInfoTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/inputET"
+        android:textColor="#CCCCCC"
+        android:textSize="12sp"
+        custom:typeface="CuraFont" />
+
+    <com.cura.classes.TypefacedEditText
+        android:id="@+id/inputET"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/userInfoTV"
+        android:inputType="text"
+        android:imeOptions="actionGo"
+        android:textColor="#CCCCCC"
+        android:textCursorDrawable="@drawable/cursor_shape"
+        android:textSize="12dip"
+        custom:typeface="CuraFont" />
+
+    <ScrollView
+        android:id="@+id/resultsSV"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/inputET" >
+
+        <com.cura.classes.TypefacedTextView
+            android:id="@+id/resultsTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#CCCCCC"
+            android:textSize="12sp"
+            custom:typeface="CuraFont" />
+    </ScrollView>
+
+</RelativeLayout>

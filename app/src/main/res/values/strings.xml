@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Cura</string>
+
+    <!-- Global -->
+    <string name="serviceDisconnected">Service Disconnected</string>
+    <string name="logout">Logout</string>
+    <string name="error">Error</string>
+    <string name="ok">OK</string>
+    <string name="success">Success</string>
+    <string name="cancel">Cancel</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="connectionTimeout">Connection timeout</string>
+    <string name="connectionTimeoutMessage">Connection timeout, please check your network or internet connectivity.\n You will be redirected to Cura\'s login screen.</string>
+		<string name="cannotProceed">Unable to proceed</string>
+		<string name="dontkeepactivitieserror">Something went wrong\nPlease try disabling \"Don\'t keep activities\" from Settings > Developer Options</string>
+		
+    <!-- App Rater -->
+    <string name="rate">Rate</string>
+    <string name="rateCura">Rate Cura</string>
+    <string name="maybeLater">Maybe Later</string>
+    <string name="noThanks">No thanks</string>
+    <string name="rateDialogString">If you enjoy using Cura please take a moment to rate it. Thank you for your support!</string>
+
+    <!-- Login Activity - Home screen -->
+    <string name="loginText">CURA allows you to manage UNIX\nservers from your Android device</string>
+    <string name="DialogTitle">Enter Credentials</string>
+    <string name="addNewServer">Add new server</string>
+    <string name="connect">Login</string>
+    <string name="connectsThrough">Connects through port</string>
+    <string name="newServer">NEW SERVER</string>
+    <string name="selectServer">SELECT SERVER</string>
+    <string name="selectServerTitle">Select Server</string>
+    <string name="editServer">Edit</string>
+    <string name="clearKey">Clear Key</string>
+    <string name="applyEditServer">Apply</string>
+    <string name="deleteServer">Delete</string>
+    <string name="noServersYet">You have not added any servers yet</string>
+    <string name="home">Home</string>
+    <string name="logoutConfirmationContent">Logout from this server?</string>
+    <string name="logoutConfirmationTitle">Logout Confirmation</string>
+    <string name="checkBoxSysLogs">Line Numbers:</string>
+    <string name="credentialsWrong">Invalid credentials/keys combination</string>
+    <string name="LoginScreenPasswordPrompt">Enter UNIX password</string>
+    <string name="LoginScreenPassphrasePrompt">Enter passphrase</string>
+    <string name="serverExists">Server account already exists!</string>
+    <string name="portError">The port entered is too long, port set to \'22\'</string>
+    <string name="connecting">Connecting...</string>
+    <string name="portErrorModify">The port entered is too long</string>
+    <string name="loader_message">Please wait while stats are being fetched from server...</string>
+    <string name="login">Login</string>
+    <string name="savePassword">Save password</string>
+    <string name="savePassphrase">Save passphrase</string>
+    <string name="privateKeyTextField">Browse Private Key</string>
+    <string name="privatekey_sdcard_error">The file must reside on your device\'s sdcard</string>
+    <string name="clearKeyResult">Private key and passphrase have been cleared for this server</string>
+    <string name="invalidkeypath">Invalid path</string>
+    <string name="installfilemanager">Please install a file manager.</string>
+    <string name="browsefiles">Browse Files</string>
+
+    <!-- Main Activity  - Hosting the 5 tabs -->
+    <string name="ServerStatsLabel">Server Stats</string>
+    <string name="TerminalLabel">Terminal</string>
+    <string name="SysLogLabel">SysLog</string>
+    <string name="controlCenter">Control Center</string>
+    <string name="SysMonitorLabel">SysMonitor</string>
+    <string name="NMapLabel">NMap</string>
+    <string name="usernameLabel">Username</string>
+    <string name="domainLabel">Domain</string>
+    <string name="portLabel">Port</string>
+    <string name="domainTextFieldHint">ex: local.domain.com</string>
+    <string name="portTextField">Port number</string>
+
+    <!-- Server Stats - 1st Tab -->
+    <string name="hostname">Hostname: </string>
+    <string name="listeningIP">Listening IP:</string>
+    <string name="killprocess">KILL PROCESS</string>
+    <string name="systemVitals">SYSTEM VITALS</string>
+    <string name="mountedFilesystems">MOUNTED FILESYSTEMS</string>
+    <string name="memoryUsage">MEMORY USAGE</string>
+    <string name="processesStatus">PROCESSES STATUS</string>
+    <string name="kernelVersion">Kernel Version:</string>
+    <string name="uptime">Uptime: </string>
+    <string name="lastBoot">Last Booted: </string>
+    <string name="totalMemory">Total Memory: </string>
+    <string name="usedMemory">% Used: </string>
+    <string name="freeMemory">% Free: </string>
+    <string name="currentUsers">Current Users:</string>
+    <string name="loadAverages">Load Averages:</string>
+    <string name="pickProcess">Pick a process</string>
+
+    <!-- Syslog Activity - 2nd Tab -->
+    <string name="SysLogLineNumberprompt">Please enter the number of lines</string>
+    <string name="SysLogNoLogsFoundprompt">No logs to be displayed here\n(There was either a permissions issue, or the logfile does not exist on your server)</string>
+    <string name="syslogTitleMessage">Read logs directly from your server (default: 10 lines)</string>
+    <string name="sysLogButtonText">GET LOGS</string>
+    <string name="fetchingLogs">Fetching logs...</string>
+    <string name="closeLogs">Close</string>
+    <string name="sysLogSaveLogsButtonText">SAVE LOGS</string>
+    <string name="logsSaved">Logs saved in Cura directory under </string>
+    <string name="noLogsFoundTitle">No logs found</string>
+    <string name="noLogsFoundContent">Either the file was not found on the server or Cura was not permitted to read its contents.</string>
+    <string name="logsFromTitle">Logs from</string>
+    <string name="savingLogs">Saving logs...</string>
+    <string name="resultsNotSaved">Results not saved</string>
+
+    <!-- NMAP Activty - 4th Tab -->
+    <string name="nmapWarning">DISCLAIMER: Please note that Nmap is not guaranteed to function as expected. Depending on your device and on the server you are connected to, needed SU capabilities or specific write operations needed by Nmap may not be provided by either (e.g. Nexus 5, Nexus 7)</string>
+    <string name="nmapSaveButtonText">SAVE RESULTS</string>
+    <string name="nmapResultsSaved">Results saved in Cura directory under </string>
+    <string name="argumentsLabel">Arguments:</string>
+    <string name="pleaseWaitNmap">Please wait, an Nmap scan can take a while.</string>
+    <string name="targetLabel">Target:</string>
+    <string name="initializing">Initializing...</string>
+    <string name="Help">Help</string>
+    <string name="start">Start</string>
+
+    <!-- Terminal - 5th (Last) Tab -->
+    <string name="execute">Exec</string>
+
+    <!-- Settings Activity -->
+    <string name="notificationCategory">Notifications</string>
+    <string name="settings">Settings</string>
+
+    <!-- About Activity -->
+    <string name="about">About</string>
+    <string name="appInformationTitle">Application Information</string>
+    <string name="authorTitle">Author</string>
+    <string name="authorContent">Think Twice Code Once</string>
+    <string name="versionTitle">Version</string>
+    <string name="versionContent">2.8</string>
+    <string name="contactInformationTitle">Contact Information</string>
+    <string name="followUs">Follow us</string>
+    <string name="emailTitle">E-mail</string>
+    <string name="emailContent">E-mail us with your feedback</string>
+    <string name="appEmail">cura.app@gmail.com</string>
+
+</resources>

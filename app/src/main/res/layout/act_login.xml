@@ -84,6 +84,7 @@
         android:id="@+id/drawer_container"
         android:layout_width="@dimen/drawer_width"
         android:layout_height="match_parent"
+        android:background="@drawable/app_bg"
         android:layout_gravity="left">
 
         <FrameLayout
@@ -91,8 +92,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ExpandableListView
-                android:id="@+id/expandDrawerList"
+            <ListView
+                android:id="@+id/drawerListView"
                 android:layout_width="300dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="left"

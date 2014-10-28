@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="70dp"
+    android:paddingLeft="5dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:layout_width="fill_parent">
+
+
+    <ImageView
+        android:id="@+id/drawer_list_item_IV"
+        android:layout_width="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_height="wrap_content" />
+
+    <com.cura.classes.TypefacedTextView
+        android:id="@+id/drawer_list_item_TV"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:layout_toRightOf="@+id/drawer_list_item_IV"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

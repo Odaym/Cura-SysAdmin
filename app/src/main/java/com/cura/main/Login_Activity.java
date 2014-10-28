@@ -25,6 +25,7 @@ import android.text.Editable;
 import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.text.style.StyleSpan;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -52,6 +53,7 @@ import com.google.analytics.tracking.android.MapBuilder;
 import net.hockeyapp.android.CrashManager;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Login_Activity extends Activity implements
@@ -59,14 +61,16 @@ public class Login_Activity extends Activity implements
 
     private static final int FILE_SELECT_CODE = 0;
 
+    private List<String> drawerItems = new ArrayList<String>();
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
+    private Drawer_Adapter drawerAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
     private int mDrawerWidth;
     private View mContentView;
     private View mDrawerContentView;
-    private float mDrawerContentOffset;
 
+    private float mDrawerContentOffset;
     private Button selectServer, newServer;
     private EditText privateKeyInput;
     private SpannableString selectServerTitle, newServerTitle;
@@ -95,6 +99,15 @@ public class Login_Activity extends Activity implements
                 R.string.home));
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout.setDrawerShadow(getResources().getDrawable(R.drawable.drawer_shadow), Gravity.START);
+        mDrawerList = (ListView) findViewById(R.id.drawerListView);
+
+        drawerItems.add(getResources().getString(R.string.navdrawer_manage_keys));
+        drawerItems.add(getResources().getString(R.string.navdrawer_report_issues));
+        drawerItems.add(getResources().getString(R.string.navdrawer_settings));
+        drawerItems.add(getResources().getString(R.string.navdrawer_about));
+
+        drawerAdapter = new Drawer_Adapter(this, drawerItems);
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
@@ -133,6 +146,7 @@ public class Login_Activity extends Activity implements
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerList.setAdapter(drawerAdapter);
 
         ((TextView) findViewById(R.id.connecting)).setVisibility(View.GONE);
         buttonsLayout = (LinearLayout) findViewById(R.id.buttonsLayout);

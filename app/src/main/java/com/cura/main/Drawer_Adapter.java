@@ -15,9 +15,10 @@ import java.util.List;
 public class Drawer_Adapter extends BaseAdapter {
 
     private final int MANAGE_KEYS = 0;
-    private final int REPORT_BUGS = 1;
-    private final int SETTINGS = 2;
-    private final int ABOUT = 3;
+    private final int SETTINGS = 1;
+    private final int REPORT_BUGS = 2;
+    private final int RATE_US = 3;
+    private final int ABOUT = 4;
 
     private LayoutInflater inflater;
     private ViewHolder holder;
@@ -75,6 +76,9 @@ public class Drawer_Adapter extends BaseAdapter {
                 break;
             case SETTINGS:
                 holder.itemImage.setImageResource(R.drawable.settings);
+                break;
+            case RATE_US:
+                holder.itemImage.setImageResource(R.drawable.rate_us);
                 break;
             case ABOUT:
                 holder.itemImage.setImageResource(R.drawable.about);

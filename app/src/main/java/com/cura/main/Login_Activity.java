@@ -18,6 +18,7 @@ import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Vibrator;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -29,10 +30,10 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,7 +45,6 @@ import com.cura.classes.Helper_Methods;
 import com.cura.classes.Server;
 import com.cura.classes.TitleFont_Customizer;
 import com.cura.database.DBHelper;
-import com.cura.rateapp.AppRater;
 import com.cura.validation.RegexValidator;
 import com.flurry.android.FlurryAgent;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -52,14 +52,20 @@ import com.google.analytics.tracking.android.MapBuilder;
 
 import net.hockeyapp.android.CrashManager;
 
+import java.io.File;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Login_Activity extends Activity implements
-        android.view.View.OnClickListener {
+public class Login_Activity extends Activity {
 
-    private static final int FILE_SELECT_CODE = 0;
+    private final int FILE_SELECT_CODE = 0;
+
+    private final int MANAGE_KEYS = 0;
+    private final int SETTINGS = 1;
+    private final int REPORT_BUGS = 2;
+    private final int RATE_US = 3;
+    private final int ABOUT = 4;
 
     private List<String> drawerItems = new ArrayList<String>();
     private DrawerLayout mDrawerLayout;
@@ -69,18 +75,18 @@ public class Login_Activity extends Activity implements
     private int mDrawerWidth;
     private View mContentView;
     private View mDrawerContentView;
-
     private float mDrawerContentOffset;
-    private Button selectServer, newServer;
-    private EditText privateKeyInput;
-    private SpannableString selectServerTitle, newServerTitle;
+
+    private Button actOnServer;
+    private SpannableString actOnServerTitle;
     private List<Server> servers;
-    private Server serverTemp;
+    private EditText privateKeyInput;
+    //    private Server serverTemp;
     private DBHelper DBHelper;
-    private boolean isConnected = false;
-    private LinearLayout buttonsLayout;
+    //    private boolean isConnected = false;
+//    private LinearLayout buttonsLayout;
     private BroadcastReceiver changeActivityGraphicsBR;
-    private Intent goToMainActivity;
+    //    private Intent goToMainActivity;
     private RegexValidator rv;
     private Vibrator vibrator;
 
@@ -89,22 +95,22 @@ public class Login_Activity extends Activity implements
         super.onCreate(savedInstanceState);
         setContentView(com.cura.R.layout.act_login);
 
-        AppRater.app_launched(this);
         DBHelper = new DBHelper(this);
 
-        // AppRater.showRateDialog(this, null);
+        servers = DBHelper.getAllServers();
 
         ActionBar actionBar = getActionBar();
         actionBar.setTitle(TitleFont_Customizer.makeStringIntoTitle(this,
                 R.string.home));
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerLayout.setDrawerShadow(getResources().getDrawable(R.drawable.drawer_shadow), Gravity.START);
+//        mDrawerLayout.setDrawerShadow(getResources().getDrawable(R.drawable.drawer_shadow), Gravity.START);
         mDrawerList = (ListView) findViewById(R.id.drawerListView);
 
         drawerItems.add(getResources().getString(R.string.navdrawer_manage_keys));
-        drawerItems.add(getResources().getString(R.string.navdrawer_report_issues));
         drawerItems.add(getResources().getString(R.string.navdrawer_settings));
+        drawerItems.add(getResources().getString(R.string.navdrawer_report_issues));
+        drawerItems.add(getResources().getString(R.string.navdrawer_rate_us));
         drawerItems.add(getResources().getString(R.string.navdrawer_about));
 
         drawerAdapter = new Drawer_Adapter(this, drawerItems);
@@ -148,24 +154,66 @@ public class Login_Activity extends Activity implements
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerList.setAdapter(drawerAdapter);
 
-        ((TextView) findViewById(R.id.connecting)).setVisibility(View.GONE);
-        buttonsLayout = (LinearLayout) findViewById(R.id.buttonsLayout);
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                switch (position) {
+                    case MANAGE_KEYS:
+                        break;
+                    case REPORT_BUGS:
+                        mDrawerLayout.closeDrawer(Gravity.LEFT);
+                        File sdCard = Environment.getExternalStorageDirectory();
+                        File file = new File(sdCard.getAbsolutePath()
+                                + "/Cura/Logs/Cura_Logs_DEBUG.txt");
+                        Uri uri = Uri.fromFile(file);
 
-        selectServer = (Button) findViewById(R.id.selectServer);
-        selectServerTitle = new SpannableString(getResources().getString(
-                R.string.selectServer));
-        selectServerTitle.setSpan(new StyleSpan(Typeface.BOLD), 0,
-                selectServerTitle.length(), 0);
-        selectServer.setText(selectServerTitle);
-        selectServer.setOnClickListener(this);
+                        Intent i = new Intent(Intent.ACTION_SEND);
+                        i.setType("message/rfc822");
+                        i.putExtra(Intent.EXTRA_EMAIL,
+                                new String[]{"cura.app@gmail.com"});
+                        i.putExtra(Intent.EXTRA_STREAM, uri);
+                        i.putExtra(Intent.EXTRA_SUBJECT, "Issue with: "
+                                + android.os.Build.MODEL + " - "
+                                + android.os.Build.VERSION.RELEASE);
+                        i.putExtra(Intent.EXTRA_TEXT, "What went wrong?\n\n");
+                        try {
+                            startActivity(Intent.createChooser(i, "Send e-mail through"));
+                        } catch (android.content.ActivityNotFoundException ex) {
+                            Toast.makeText(Login_Activity.this,
+                                    "There are no email clients installed.", Toast.LENGTH_SHORT)
+                                    .show();
+                        }
+                        break;
+                    case SETTINGS:
+                        startActivity(new Intent(Login_Activity.this, Preference_Screen.class));
+                        EasyTracker.getInstance(Login_Activity.this).send(
+                                MapBuilder.createEvent("Login_Activity_Options", "button", "Settings",
+                                        null).build());
+                        FlurryAgent.logEvent("Login_Options");
+                        break;
+                    case RATE_US:
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri
+                                .parse("market://details?id=" + Constants.APP_MARKET_NAME)));
+                        break;
+                    case ABOUT:
+                        startActivity(new Intent(Login_Activity.this, About_Activity.class));
+                        break;
+                }
+            }
+        });
 
-        newServer = (Button) findViewById(R.id.newServer);
-        newServerTitle = new SpannableString(getResources().getString(
-                R.string.newServer));
-        newServerTitle.setSpan(new StyleSpan(Typeface.BOLD), 0,
-                newServerTitle.length(), 0);
-        newServer.setText(newServerTitle);
-        newServer.setOnClickListener(this);
+        actOnServer = (Button) findViewById(R.id.actOnServer);
+        if (servers.isEmpty())
+            actOnServerTitle = new SpannableString(getResources().getString(
+                    R.string.newServer));
+        else
+            actOnServerTitle = new SpannableString(getResources().getString(
+                    R.string.newServer));
+
+        actOnServerTitle.setSpan(new StyleSpan(Typeface.BOLD), 0,
+                actOnServer.length(), 0);
+
+        actOnServer.setText(actOnServerTitle);
 
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         rv = new RegexValidator();
@@ -177,16 +225,16 @@ public class Login_Activity extends Activity implements
                 Bundle connectedExtras = intent.getExtras();
                 boolean connected = connectedExtras.getBoolean("Connected");
                 if (connected) {
-                    ((ImageView) findViewById(R.id.server))
+                    ((ImageView) findViewById(R.id.serverImage))
                             .setImageResource(R.drawable.serverconnecting);
                     ((TextView) findViewById(R.id.connecting))
                             .setVisibility(View.VISIBLE);
-                    buttonsLayout.setVisibility(View.INVISIBLE);
+                    actOnServer.setVisibility(View.INVISIBLE);
                 } else {
-                    ((ImageView) findViewById(R.id.server))
+                    ((ImageView) findViewById(R.id.serverImage))
                             .setImageResource(R.drawable.serveroffline);
                     ((TextView) findViewById(R.id.connecting)).setVisibility(View.GONE);
-                    buttonsLayout.setVisibility(View.VISIBLE);
+                    actOnServer.setVisibility(View.VISIBLE);
                     new AlertDialog.Builder(Login_Activity.this)
                             .setTitle(
                                     TitleFont_Customizer.makeStringIntoTitle(Login_Activity.this,
@@ -214,44 +262,6 @@ public class Login_Activity extends Activity implements
     }
 
     @Override
-    public void onClick(View arg0) {
-        switch (arg0.getId()) {
-            case R.id.selectServer:
-                servers = DBHelper.getAllServers();
-                if (servers.isEmpty()) {
-                    new AlertDialog.Builder(Login_Activity.this)
-                            .setMessage(
-                                    TitleFont_Customizer.makeStringIntoTitle(Login_Activity.this,
-                                            getResources().getString(R.string.noServersYet)))
-                            .setPositiveButton(
-                                    TitleFont_Customizer.makeStringIntoTitle(Login_Activity.this,
-                                            getResources().getString(R.string.ok)),
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int arg1) {
-                                            dialog.dismiss();
-                                        }
-                                    }).show();
-                } else {
-                    startActivity(new Intent(this, AccountsList_Activity.class));
-                }
-                EasyTracker.getInstance(this).send(
-                        MapBuilder.createEvent("Login_Activity", "button", "Select Server",
-                                null).build());
-                FlurryAgent.logEvent("Login_Select_Server");
-                break;
-            case R.id.newServer:
-                addServer();
-                EasyTracker.getInstance(this).send(
-                        MapBuilder
-                                .createEvent("Login_Activity", "button", "Add Server", null)
-                                .build());
-                FlurryAgent.logEvent("Login_Add_Server");
-                break;
-        }
-    }
-
-    @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         mDrawerToggle.syncState();
@@ -271,20 +281,7 @@ public class Login_Activity extends Activity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.login, menu);
         return true;
-    }
-
-    public void menu_Settings(MenuItem mi) {
-        startActivity(new Intent(Login_Activity.this, Preference_Screen.class));
-        EasyTracker.getInstance(this).send(
-                MapBuilder.createEvent("Login_Activity_Options", "button", "Settings",
-                        null).build());
-        FlurryAgent.logEvent("Login_Options");
-    }
-
-    public void menu_About(MenuItem mi) {
-        startActivity(new Intent(Login_Activity.this, About_Activity.class));
     }
 
     protected void addServer() {
@@ -508,12 +505,12 @@ public class Login_Activity extends Activity implements
         super.onStart();
         EasyTracker.getInstance(this).activityStart(this);
         FlurryAgent.onStartSession(this, Constants.FLURRY_APP_ID);
-        if (isConnected) {
-            goToMainActivity = new Intent(Login_Activity.this, Main_Activity.class);
-            goToMainActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            goToMainActivity.putExtra("server", serverTemp);
-            startActivity(goToMainActivity);
-        }
+//        if (isConnected) {
+//            goToMainActivity = new Intent(Login_Activity.this, Main_Activity.class);
+//            goToMainActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//            goToMainActivity.putExtra("server", serverTemp);
+//            startActivity(goToMainActivity);
+//        }
     }
 
     @Override
@@ -527,6 +524,7 @@ public class Login_Activity extends Activity implements
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(changeActivityGraphicsBR);
+        Helper_Methods.appendLog("wipe");
     }
 
     private void checkForCrashes() {

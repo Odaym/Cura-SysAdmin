@@ -17,7 +17,7 @@
         android:id="@+id/drawer_list_item_TV"
         android:layout_centerVertical="true"
         android:layout_width="wrap_content"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textColor="@color/white"
         android:layout_toRightOf="@+id/drawer_list_item_IV"
         android:layout_height="wrap_content" />

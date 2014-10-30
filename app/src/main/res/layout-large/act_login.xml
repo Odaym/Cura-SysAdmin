@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="left">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <ImageView
+            android:id="@+id/curaLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/curalogo" />
+
+        <com.cura.classes.TypefacedTextView
+            android:id="@+id/curaDescription"
+            android:layout_width="wrap_content"
+            android:layout_above="@+id/serverImage"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/curaLogo"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="@string/loginText"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            custom:typeface="CuraFont" />
+
+        <ImageView
+            android:id="@+id/serverImage"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content"
+            android:src="@drawable/serveroffline" />
+
+        <com.cura.classes.TypefacedTextView
+            android:id="@+id/connecting"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/serverImage"
+            android:text="@string/connecting"
+            android:textColor="#7AC65D"
+            android:textSize="13sp"
+            android:textStyle="bold|italic"
+            android:visibility="gone"
+            custom:typeface="CuraFont" />
+
+        <com.cura.classes.TypefacedButton
+            android:id="@+id/actOnServer"
+            style="@style/positive_buttons_style"
+            android:layout_marginTop="90dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/serverImage"
+            android:layout_alignLeft="@+id/curaDescription"
+            android:layout_alignStart="@+id/curaDescription"
+            android:layout_alignRight="@+id/curaDescription"
+            android:layout_alignEnd="@+id/curaDescription"
+            android:textSize="13sp" />
+
+        <!--<com.cura.classes.TypefacedButton-->
+        <!--android:id="@+id/newServer"-->
+        <!--style="@style/positive_buttons_style"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="20dip"-->
+        <!--android:layout_marginRight="20dip"-->
+        <!--android:layout_weight="1"-->
+        <!--android:textSize="13sp"-->
+        <!--custom:typeface="CuraFont" />-->
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/drawer_container"
+        android:layout_width="@dimen/drawer_width"
+        android:layout_height="match_parent"
+        android:background="@drawable/app_bg"
+        android:layout_gravity="left">
+
+        <FrameLayout
+            android:id="@+id/drawer_content_container"
+            android:background="@drawable/drawer_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/drawerListView"
+                android:layout_width="@dimen/drawer_width"
+                android:layout_height="match_parent"
+                android:layout_gravity="left"
+                android:choiceMode="singleChoice"
+                android:dividerHeight="0dp"
+                android:groupIndicator="@null" />
+        </FrameLayout>
+    </FrameLayout>
+</android.support.v4.widget.DrawerLayout>

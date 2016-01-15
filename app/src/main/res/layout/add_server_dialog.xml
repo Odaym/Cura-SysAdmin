@@ -5,11 +5,11 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="5dp"
     android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp" >
+    android:layout_marginRight="5dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
         <com.cura.classes.TypefacedTextView
             android:id="@+id/usernameLabel"
@@ -25,7 +25,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/usernameLabel"
-            android:maxLines="1"
+            android:singleLine="true"
             custom:typeface="CuraFont" />
 
         <requestFocus />
@@ -46,8 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/domainLabel"
             android:layout_gravity="fill_horizontal"
-            android:hint="@string/domainTextFieldHint"
-            android:maxLines="1"
+            android:singleLine="true"
             custom:typeface="CuraFont" />
 
         <com.cura.classes.TypefacedTextView
@@ -86,7 +85,7 @@
             android:layout_height="fill_parent"
             android:layout_below="@+id/privateKeyLabel"
             android:layout_centerVertical="true"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <com.cura.classes.TypefacedEditText
                 android:id="@+id/privateKeyTextField"
@@ -94,6 +93,7 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:editable="false"
+                android:hint="@string/optional_hint"
                 android:maxLines="1"
                 custom:typeface="CuraFont" />
 
@@ -112,6 +112,7 @@
             android:layout_below="@+id/privateKeyInputLayout"
             android:layout_marginTop="20dp"
             android:background="@drawable/positive_button_select"
+            android:textSize="15sp"
             custom:typeface="CuraFont" />
 
         <com.cura.classes.TypefacedButton
@@ -122,6 +123,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/kill_button_select"
             android:text="@string/cancel"
+            android:textSize="15sp"
             custom:typeface="CuraFont" />
     </RelativeLayout>
 

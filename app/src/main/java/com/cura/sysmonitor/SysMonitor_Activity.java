@@ -25,7 +25,26 @@ package com.cura.sysmonitor;
  * for this activity are Pause (where the monitoring pauses at the last fetched values) and Resume (where it resumes).
  */
 
-import java.util.Date;
+import android.app.Activity;
+import android.app.NotificationManager;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.os.IBinder;
+import android.os.RemoteException;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.cura.R;
+import com.cura.classes.Bash;
+import com.cura.classes.Constants;
+import com.cura.connection.CommunicationInterface;
+import com.cura.connection.ConnectionService;
+import com.flurry.android.FlurryAgent;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import net.hockeyapp.android.CrashManager;
 
@@ -37,31 +56,7 @@ import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.NotificationManager;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.ServiceConnection;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.os.IBinder;
-import android.os.RemoteException;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.widget.Toast;
-
-import com.cura.R;
-import com.cura.classes.Bash;
-import com.cura.classes.Constants;
-import com.cura.classes.TitleFont_Customizer;
-import com.cura.connection.CommunicationInterface;
-import com.cura.connection.ConnectionService;
-import com.cura.main.Login_Activity;
-import com.flurry.android.FlurryAgent;
-import com.google.analytics.tracking.android.EasyTracker;
+import java.util.Date;
 
 public class SysMonitor_Activity extends Activity {
 
@@ -188,47 +183,6 @@ public class SysMonitor_Activity extends Activity {
 	public void stopThread() {
 		mThread = null;
 		state = false;
-	}
-
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-			new AlertDialog.Builder(this)
-					.setTitle(
-							TitleFont_Customizer.makeStringIntoTitle(getApplicationContext(),
-									R.string.logoutConfirmationTitle))
-					.setMessage(
-							TitleFont_Customizer.makeStringIntoTitle(getApplicationContext(),
-									R.string.logoutConfirmationContent))
-					.setPositiveButton(
-							TitleFont_Customizer.makeStringIntoTitle(getApplicationContext(),
-									R.string.yes), new DialogInterface.OnClickListener() {
-
-								public void onClick(DialogInterface dialog, int which) {
-									try {
-										Log.d("Connection", "connection closed");
-									} catch (Exception e) {
-										Log.d("Connection", e.toString());
-									}
-									Intent closeAllActivities = new Intent(
-											getApplicationContext(), Login_Activity.class);
-									closeAllActivities.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-											| Intent.FLAG_ACTIVITY_CLEAR_TASK);
-									startActivity(closeAllActivities);
-
-									mNotificationManager.cancelAll();
-								}
-							})
-					.setNegativeButton(
-							TitleFont_Customizer.makeStringIntoTitle(getApplicationContext(),
-									R.string.no), new DialogInterface.OnClickListener() {
-
-								public void onClick(DialogInterface dialog, int which) {
-									dialog.dismiss();
-								}
-							}).show();
-		}
-		return super.onKeyDown(keyCode, event);
 	}
 
 	@Override

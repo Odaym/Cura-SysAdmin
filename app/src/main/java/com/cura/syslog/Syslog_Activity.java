@@ -26,20 +26,12 @@ package com.cura.syslog;
  * choose to Tail or Head that file according to a user-specified number (e.g. the first 45 lines, the last 20 lines).
  */
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Date;
-
-import net.hockeyapp.android.CrashManager;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.AsyncTask;
@@ -47,7 +39,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -61,10 +52,16 @@ import com.cura.classes.Server;
 import com.cura.classes.TitleFont_Customizer;
 import com.cura.connection.CommunicationInterface;
 import com.cura.connection.ConnectionService;
-import com.cura.main.Login_Activity;
 import com.flurry.android.FlurryAgent;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.MapBuilder;
+
+import net.hockeyapp.android.CrashManager;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Date;
 
 public class Syslog_Activity extends Activity implements
 		android.view.View.OnClickListener {
@@ -253,11 +250,11 @@ public class Syslog_Activity extends Activity implements
 					openLogsDialog.putExtra("logsFileName", file);
 					startActivity(openLogsDialog);
 					EasyTracker.getInstance(Syslog_Activity.this).send(
-							MapBuilder.createEvent("Login_Activity", "event", "Got Logs",
+							MapBuilder.createEvent("SysLog_Activity", "event", "Got Logs",
 									null).build());
 				} else {
 					EasyTracker.getInstance(Syslog_Activity.this).send(
-							MapBuilder.createEvent("Login_Activity", "event",
+							MapBuilder.createEvent("SysLog_Activity", "event",
 									"Got Logs and Saved", null).build());
 					if (!syslogDir.exists()) {
 						syslogDir.mkdir();
@@ -285,47 +282,6 @@ public class Syslog_Activity extends Activity implements
 				}
 			}
 		}.execute();
-	}
-
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-			new AlertDialog.Builder(this)
-					.setTitle(
-							TitleFont_Customizer.makeStringIntoTitle(getApplicationContext(),
-									R.string.logoutConfirmationTitle))
-					.setMessage(
-							TitleFont_Customizer.makeStringIntoTitle(getApplicationContext(),
-									R.string.logoutConfirmationContent))
-					.setPositiveButton(
-							TitleFont_Customizer.makeStringIntoTitle(getApplicationContext(),
-									R.string.yes), new DialogInterface.OnClickListener() {
-
-								public void onClick(DialogInterface dialog, int which) {
-									try {
-										Log.d("Connection", "connection closed");
-									} catch (Exception e) {
-										Log.d("Connection", e.toString());
-									}
-									Intent closeAllActivities = new Intent(
-											getApplicationContext(), Login_Activity.class);
-									closeAllActivities.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-											| Intent.FLAG_ACTIVITY_CLEAR_TASK);
-									startActivity(closeAllActivities);
-
-									mNotificationManager.cancelAll();
-								}
-							})
-					.setNegativeButton(
-							TitleFont_Customizer.makeStringIntoTitle(getApplicationContext(),
-									R.string.no), new DialogInterface.OnClickListener() {
-
-								public void onClick(DialogInterface dialog, int which) {
-									dialog.dismiss();
-								}
-							}).show();
-		}
-		return super.onKeyDown(keyCode, event);
 	}
 
 	@Override

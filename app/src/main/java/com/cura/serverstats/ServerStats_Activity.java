@@ -5,7 +5,6 @@ package com.cura.serverstats;
  * Process Status and so on. The user will be able to refresh these stats while in the activity by going to Menu > Refresh. 
  */
 
-import net.hockeyapp.android.CrashManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -24,7 +23,6 @@ import android.os.RemoteException;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
@@ -39,9 +37,10 @@ import com.cura.classes.Server;
 import com.cura.classes.TitleFont_Customizer;
 import com.cura.connection.CommunicationInterface;
 import com.cura.connection.ConnectionService;
-import com.cura.main.Login_Activity;
 import com.flurry.android.FlurryAgent;
 import com.google.analytics.tracking.android.EasyTracker;
+
+import net.hockeyapp.android.CrashManager;
 
 public class ServerStats_Activity extends Activity {
 
@@ -287,46 +286,6 @@ public class ServerStats_Activity extends Activity {
 			tv = (TextView) findViewById(R.id.freeMem);
 			tv.setText(getResources().getString(R.string.freeMemory) + " " + freeMem);
 		}
-	}
-
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-			new AlertDialog.Builder(this)
-					.setTitle(
-							TitleFont_Customizer.makeStringIntoTitle(getApplicationContext(),
-									R.string.logoutConfirmationTitle))
-					.setMessage(
-							TitleFont_Customizer.makeStringIntoTitle(getApplicationContext(),
-									R.string.logoutConfirmationContent))
-					.setPositiveButton(
-							TitleFont_Customizer.makeStringIntoTitle(getApplicationContext(),
-									R.string.yes), new DialogInterface.OnClickListener() {
-
-								public void onClick(DialogInterface dialog, int which) {
-									try {
-										Log.d("Connection", "connection closed");
-									} catch (Exception e) {
-										Log.d("Connection", e.toString());
-									}
-									Intent closeAllActivities = new Intent(
-											getApplicationContext(), Login_Activity.class);
-									closeAllActivities.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-											| Intent.FLAG_ACTIVITY_CLEAR_TASK);
-									startActivity(closeAllActivities);
-									mNotificationManager.cancelAll();
-								}
-							})
-					.setNegativeButton(
-							TitleFont_Customizer.makeStringIntoTitle(getApplicationContext(),
-									R.string.no), new DialogInterface.OnClickListener() {
-
-								public void onClick(DialogInterface dialog, int which) {
-									dialog.dismiss();
-								}
-							}).show();
-		}
-		return super.onKeyDown(keyCode, event);
 	}
 
 	@Override

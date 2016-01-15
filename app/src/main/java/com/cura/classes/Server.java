@@ -9,100 +9,127 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Server implements Parcelable {
-	private String username;
-	private String domain;
-	private int port;
-	private String password;
-	private String privateKey;
-	private String passPhrase;
+    private int id;
+    private String username;
+    private String domain;
+    private int port;
+    private String password;
+    private String privateKey;
+    private String passPhrase;
+    private int order;
 
-	public Server(String username, String domain, int port, String password,
-			String privateKey, String passPhrase) {
-		this.username = username;
-		this.domain = domain;
-		this.port = port;
-		this.password = password;
-		this.privateKey = privateKey;
-		this.passPhrase = passPhrase;
-	}
+    public Server() {
 
-	public Server(Parcel in) {
-		username = in.readString();
-		domain = in.readString();
-		port = in.readInt();
-		password = in.readString();
-		privateKey = in.readString();
-		passPhrase = in.readString();
-	}
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public Server(String username, String domain, int port, String password,
+                  String privateKey, String passPhrase, int order) {
+        this.username = username;
+        this.domain = domain;
+        this.port = port;
+        this.password = password;
+        this.privateKey = privateKey;
+        this.passPhrase = passPhrase;
+        this.order = order;
+    }
 
-	public void setDomain(String domain) {
-		this.domain = domain;
-	}
+    public Server(Parcel in) {
+        id = in.readInt();
+        username = in.readString();
+        domain = in.readString();
+        port = in.readInt();
+        password = in.readString();
+        privateKey = in.readString();
+        passPhrase = in.readString();
+        order = in.readInt();
+    }
 
-	public void setPort(int port) {
-		this.port = port;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public String getDomain() {
-		return domain;
-	}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	public int getPort() {
-		return port;
-	}
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setPort(int port) {
+        this.port = port;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	public void setPrivateKey(String privateKey) {
-		this.privateKey = privateKey;
-	}
+    public String getDomain() {
+        return domain;
+    }
 
-	public String getPrivateKey() {
-		return privateKey;
-	}
+    public int getPort() {
+        return port;
+    }
 
-	public void setPassphrase(String passPhrase) {
-		this.passPhrase = passPhrase;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public String getPassphrase() {
-		return passPhrase;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public int describeContents() {
-		return 0;
-	}
+    public void setPrivateKey(String privateKey) {
+        this.privateKey = privateKey;
+    }
 
-	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeString(username);
-		dest.writeString(domain);
-		dest.writeInt(port);
-		dest.writeString(password);
-		dest.writeString(privateKey);
-		dest.writeString(passPhrase);
-	}
+    public String getPrivateKey() {
+        return privateKey;
+    }
 
-	public static final Parcelable.Creator<Server> CREATOR = new Parcelable.Creator<Server>() {
-		public Server createFromParcel(Parcel in) {
-			return new Server(in);
-		}
+    public void setPassphrase(String passPhrase) {
+        this.passPhrase = passPhrase;
+    }
 
-		public Server[] newArray(int size) {
-			return new Server[size];
-		}
-	};
+    public String getPassphrase() {
+        return passPhrase;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public int describeContents() {
+        return 0;
+    }
+
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(username);
+        dest.writeString(domain);
+        dest.writeInt(port);
+        dest.writeString(password);
+        dest.writeString(privateKey);
+        dest.writeString(passPhrase);
+        dest.writeInt(order);
+    }
+
+    public static final Parcelable.Creator<Server> CREATOR = new Parcelable.Creator<Server>() {
+        public Server createFromParcel(Parcel in) {
+            return new Server(in);
+        }
+
+        public Server[] newArray(int size) {
+            return new Server[size];
+        }
+    };
 }

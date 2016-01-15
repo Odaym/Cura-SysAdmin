@@ -22,7 +22,7 @@ import android.util.Log;
 import com.cura.R;
 import com.cura.classes.Bash;
 import com.cura.classes.Server;
-import com.cura.main.Main_Activity;
+import com.cura.main.Server_Home_Activity;
 import com.cura.terminal.Terminal;
 
 public class ConnectionService extends Service {
@@ -134,7 +134,7 @@ public class ConnectionService extends Service {
 												contentText = msg;
 
 												Intent notificationIntent = new Intent(
-														ConnectionService.this, Main_Activity.class);
+														ConnectionService.this, Server_Home_Activity.class);
 												notificationIntent.putExtra("server", server);
 												notificationIntent
 														.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);

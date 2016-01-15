@@ -15,8 +15,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Vibrator;
@@ -33,17 +35,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cura.R;
-import com.cura.about.About_Activity;
 import com.cura.classes.Constants;
 import com.cura.classes.Helper_Methods;
 import com.cura.classes.Server;
 import com.cura.classes.TitleFont_Customizer;
+import com.cura.connection.ConnectionService;
 import com.cura.database.DBHelper;
 import com.cura.validation.RegexValidator;
 import com.flurry.android.FlurryAgent;
@@ -61,11 +62,10 @@ public class Login_Activity extends Activity {
 
     private final int FILE_SELECT_CODE = 0;
 
-    private final int MANAGE_KEYS = 0;
-    private final int SETTINGS = 1;
-    private final int REPORT_BUGS = 2;
-    private final int RATE_US = 3;
-    private final int ABOUT = 4;
+    //    private final int MANAGE_KEYS = 0;
+    private final int SETTINGS = 0;
+    private final int REPORT_BUGS = 1;
+    private final int RATE_US = 2;
 
     private List<String> drawerItems = new ArrayList<String>();
     private DrawerLayout mDrawerLayout;
@@ -76,17 +76,18 @@ public class Login_Activity extends Activity {
     private View mContentView;
     private View mDrawerContentView;
     private float mDrawerContentOffset;
+    private TextView aboutTV;
 
-    private Button actOnServer;
-    private SpannableString actOnServerTitle;
+    private Server tempServer;
+    private BroadcastReceiver connectionBR, serverPropertiesChangedBR;
+
+    private final String connected = "cura.connected";
+    private final String notConnected = "cura.not.connected";
+    private final String serverPropertiesChangedString = "com.cura.serverPropertiesChanged";
+
     private List<Server> servers;
     private EditText privateKeyInput;
-    //    private Server serverTemp;
-    private DBHelper DBHelper;
-    //    private boolean isConnected = false;
-//    private LinearLayout buttonsLayout;
-    private BroadcastReceiver changeActivityGraphicsBR;
-    //    private Intent goToMainActivity;
+    private DBHelper dbHelper;
     private RegexValidator rv;
     private Vibrator vibrator;
 
@@ -95,23 +96,20 @@ public class Login_Activity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(com.cura.R.layout.act_login);
 
-        DBHelper = new DBHelper(this);
+        dbHelper = new DBHelper(this);
+        servers = dbHelper.getAllServers();
 
-        servers = DBHelper.getAllServers();
-
-        ActionBar actionBar = getActionBar();
+        final ActionBar actionBar = getActionBar();
         actionBar.setTitle(TitleFont_Customizer.makeStringIntoTitle(this,
                 R.string.home));
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        mDrawerLayout.setDrawerShadow(getResources().getDrawable(R.drawable.drawer_shadow), Gravity.START);
         mDrawerList = (ListView) findViewById(R.id.drawerListView);
 
-        drawerItems.add(getResources().getString(R.string.navdrawer_manage_keys));
+//        drawerItems.add(getResources().getString(R.string.navdrawer_manage_keys));
         drawerItems.add(getResources().getString(R.string.navdrawer_settings));
         drawerItems.add(getResources().getString(R.string.navdrawer_report_issues));
         drawerItems.add(getResources().getString(R.string.navdrawer_rate_us));
-        drawerItems.add(getResources().getString(R.string.navdrawer_about));
 
         drawerAdapter = new Drawer_Adapter(this, drawerItems);
 
@@ -129,7 +127,7 @@ public class Login_Activity extends Activity {
                 - getResources().getDimensionPixelSize(R.dimen.drawer_slide_out);
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                R.drawable.ic_drawer, R.string.app_name, R.string.app_name) {
+                R.drawable.ic_drawer, R.string.home, R.string.home) {
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
 
@@ -154,12 +152,21 @@ public class Login_Activity extends Activity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerList.setAdapter(drawerAdapter);
 
+        aboutTV = (TextView) findViewById(R.id.aboutTV);
+        try {
+            SpannableString authorBoldPart = new SpannableString(getResources().getString(R.string.authorTitle));
+            authorBoldPart.setSpan(new StyleSpan(Typeface.BOLD),
+                    0, authorBoldPart.length(), 0);
+            aboutTV.setText(getResources().getString(R.string.versionName) + " " + getPackageManager().getPackageInfo(getPackageName(), 0).versionName + "\n\nby " + authorBoldPart);
+        } catch (PackageManager.NameNotFoundException e) {
+        }
+
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 switch (position) {
-                    case MANAGE_KEYS:
-                        break;
+//                    case MANAGE_KEYS:
+//                        break;
                     case REPORT_BUGS:
                         mDrawerLayout.closeDrawer(Gravity.LEFT);
                         File sdCard = Environment.getExternalStorageDirectory();
@@ -170,11 +177,11 @@ public class Login_Activity extends Activity {
                         Intent i = new Intent(Intent.ACTION_SEND);
                         i.setType("message/rfc822");
                         i.putExtra(Intent.EXTRA_EMAIL,
-                                new String[]{"cura.app@gmail.com"});
+                                new String[]{"support@cura.tools"});
                         i.putExtra(Intent.EXTRA_STREAM, uri);
                         i.putExtra(Intent.EXTRA_SUBJECT, "Issue with: "
-                                + android.os.Build.MODEL + " - "
-                                + android.os.Build.VERSION.RELEASE);
+                                + Build.MANUFACTURER + " " + Build.MODEL + " (" + Build.DEVICE + ") - "
+                                + Build.VERSION.RELEASE);
                         i.putExtra(Intent.EXTRA_TEXT, "What went wrong?\n\n");
                         try {
                             startActivity(Intent.createChooser(i, "Send e-mail through"));
@@ -195,70 +202,78 @@ public class Login_Activity extends Activity {
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri
                                 .parse("market://details?id=" + Constants.APP_MARKET_NAME)));
                         break;
-                    case ABOUT:
-                        startActivity(new Intent(Login_Activity.this, About_Activity.class));
-                        break;
                 }
             }
         });
 
-        actOnServer = (Button) findViewById(R.id.actOnServer);
-        if (servers.isEmpty())
-            actOnServerTitle = new SpannableString(getResources().getString(
-                    R.string.newServer));
-        else
-            actOnServerTitle = new SpannableString(getResources().getString(
-                    R.string.newServer));
+        SpannableString newServerTitleSpan = new SpannableString(getResources().getString(R.string.newServer));
+        SpannableString selectServerTitleSpan = new SpannableString(getResources().getString(R.string.selectServer));
+        Button newServer = (Button) findViewById(R.id.newServer);
+        Button selectServer = (Button) findViewById(R.id.selectServer);
 
-        actOnServerTitle.setSpan(new StyleSpan(Typeface.BOLD), 0,
-                actOnServer.length(), 0);
+        newServerTitleSpan.setSpan(new StyleSpan(Typeface.BOLD), 0,
+                newServerTitleSpan.length(), 0);
+        newServer.setText(newServerTitleSpan);
+        newServer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addServer();
+            }
+        });
 
-        actOnServer.setText(actOnServerTitle);
+        selectServerTitleSpan.setSpan(new StyleSpan(Typeface.BOLD), 0,
+                selectServerTitleSpan.length(), 0);
+        selectServer.setText(selectServerTitleSpan);
+        selectServer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (servers.isEmpty())
+                    addServer();
+                else
+                    startActivity(new Intent(Login_Activity.this, Select_Server_Activity.class));
+            }
+        });
 
-        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        rv = new RegexValidator();
-
-        changeActivityGraphicsBR = new BroadcastReceiver() {
+        connectionBR = new BroadcastReceiver() {
 
             @Override
             public void onReceive(Context context, Intent intent) {
-                Bundle connectedExtras = intent.getExtras();
-                boolean connected = connectedExtras.getBoolean("Connected");
-                if (connected) {
-                    ((ImageView) findViewById(R.id.serverImage))
-                            .setImageResource(R.drawable.serverconnecting);
-                    ((TextView) findViewById(R.id.connecting))
-                            .setVisibility(View.VISIBLE);
-                    actOnServer.setVisibility(View.INVISIBLE);
+                Bundle extras = intent.getExtras();
+                setProgressBarIndeterminateVisibility(false);
+                if (extras != null) {
+                    tempServer = extras.getParcelable("server");
+                }
+                if (intent.getAction().compareTo(connected) == 0) {
+                    Intent goToMainActivity = new Intent(Login_Activity.this,
+                            Server_Home_Activity.class);
+                    goToMainActivity.putExtra("server", tempServer);
+                    startActivity(goToMainActivity);
                 } else {
-                    ((ImageView) findViewById(R.id.serverImage))
-                            .setImageResource(R.drawable.serveroffline);
-                    ((TextView) findViewById(R.id.connecting)).setVisibility(View.GONE);
-                    actOnServer.setVisibility(View.VISIBLE);
-                    new AlertDialog.Builder(Login_Activity.this)
-                            .setTitle(
-                                    TitleFont_Customizer.makeStringIntoTitle(Login_Activity.this,
-                                            R.string.error))
-                            .setMessage(
-                                    TitleFont_Customizer.makeStringIntoTitle(Login_Activity.this,
-                                            getResources().getString(R.string.credentialsWrong)))
-                            .setPositiveButton(
-                                    TitleFont_Customizer.makeStringIntoTitle(Login_Activity.this,
-                                            getResources().getString(R.string.ok)),
-                                    new DialogInterface.OnClickListener() {
-
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int arg1) {
-                                            dialog.dismiss();
-                                        }
-                                    }).show();
+                    stopService(new Intent(Login_Activity.this,
+                            ConnectionService.class));
                 }
             }
         };
 
-        IntentFilter changeActivityGraphicsFilter = new IntentFilter();
-        changeActivityGraphicsFilter.addAction("com.cura.changeActivityGraphics");
-        registerReceiver(changeActivityGraphicsBR, changeActivityGraphicsFilter);
+        serverPropertiesChangedBR = new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                servers = dbHelper.getAllServers();
+            }
+        };
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(connected);
+        intentFilter.addAction(notConnected);
+        registerReceiver(connectionBR, intentFilter);
+
+        IntentFilter serverPropertiesChangedFilter = new IntentFilter();
+        serverPropertiesChangedFilter.addAction(serverPropertiesChangedString);
+        registerReceiver(serverPropertiesChangedBR, serverPropertiesChangedFilter);
+
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        rv = new RegexValidator();
     }
 
     @Override
@@ -364,10 +379,21 @@ public class Login_Activity extends Activity {
                 }
 
                 if (!isFound(username, domain)) {
-                    Server serverToInsert = new Server(username, domain, port, "",
-                            privateKeyPath, null);
-                    DBHelper.createServer(serverToInsert);
+                    Server serverToInsert = new Server();
+                    serverToInsert.setUsername(username);
+                    serverToInsert.setDomain(domain);
+                    serverToInsert.setPort(port);
+                    serverToInsert.setPassword("");
+                    serverToInsert.setPrivateKey(privateKeyPath);
+                    serverToInsert.setPassphrase(null);
+                    serverToInsert.setOrder(0);
+
+                    dbHelper.createServer(serverToInsert);
+                    servers = dbHelper.getAllServers();
                     myDialog.cancel();
+
+                    Intent goToSelectServer_Activity = new Intent(Login_Activity.this, Select_Server_Activity.class);
+                    startActivity(goToSelectServer_Activity);
                     FlurryAgent.logEvent("Login_Server_Added");
                 } else {
                     Login_Activity.this.vibrator.vibrate(300);
@@ -484,7 +510,7 @@ public class Login_Activity extends Activity {
     public boolean isFound(String username, String domain) {
         String userValue = "";
         String dom = "";
-        servers = DBHelper.getAllServers();
+        servers = dbHelper.getAllServers();
         for (int i = 0; i < servers.size(); i++) {
             userValue = servers.get(i).getUsername();
             dom = servers.get(i).getDomain();
@@ -505,12 +531,6 @@ public class Login_Activity extends Activity {
         super.onStart();
         EasyTracker.getInstance(this).activityStart(this);
         FlurryAgent.onStartSession(this, Constants.FLURRY_APP_ID);
-//        if (isConnected) {
-//            goToMainActivity = new Intent(Login_Activity.this, Main_Activity.class);
-//            goToMainActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//            goToMainActivity.putExtra("server", serverTemp);
-//            startActivity(goToMainActivity);
-//        }
     }
 
     @Override
@@ -523,7 +543,8 @@ public class Login_Activity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(changeActivityGraphicsBR);
+        unregisterReceiver(connectionBR);
+        unregisterReceiver(serverPropertiesChangedBR);
         Helper_Methods.appendLog("wipe");
     }
 

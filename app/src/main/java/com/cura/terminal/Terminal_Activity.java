@@ -25,16 +25,10 @@ package com.cura.terminal;
  * will allow the user to add any number of their favorite commands to be executed when they choose one of them from the list.
  */
 
-import java.text.DateFormat;
-import java.util.Calendar;
-
-import net.hockeyapp.android.CrashManager;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Color;
@@ -47,7 +41,6 @@ import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ScrollView;
@@ -57,13 +50,16 @@ import android.widget.Toast;
 import com.cura.R;
 import com.cura.classes.Constants;
 import com.cura.classes.Server;
-import com.cura.classes.TitleFont_Customizer;
 import com.cura.connection.CommunicationInterface;
 import com.cura.connection.ConnectionService;
-import com.cura.main.Login_Activity;
 import com.flurry.android.FlurryAgent;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.MapBuilder;
+
+import net.hockeyapp.android.CrashManager;
+
+import java.text.DateFormat;
+import java.util.Calendar;
 
 public class Terminal_Activity extends Activity {
 
@@ -168,71 +164,6 @@ public class Terminal_Activity extends Activity {
 	protected void onDestroy() {
 		super.onStop();
 		getApplicationContext().unbindService(connection);
-	}
-
-	public boolean onDown(MotionEvent e) {
-		return false;
-	}
-
-	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-			float velocityY) {
-		return false;
-	}
-
-	public void onLongPress(MotionEvent e) {
-	}
-
-	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-			float distanceY) {
-		return false;
-	}
-
-	public void onShowPress(MotionEvent e) {
-	}
-
-	public boolean onSingleTapUp(MotionEvent e) {
-		return false;
-	}
-
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-			new AlertDialog.Builder(this)
-					.setTitle(
-							TitleFont_Customizer.makeStringIntoTitle(getApplicationContext(),
-									R.string.logoutConfirmationTitle))
-					.setMessage(
-							TitleFont_Customizer.makeStringIntoTitle(getApplicationContext(),
-									R.string.logoutConfirmationContent))
-					.setPositiveButton(
-							TitleFont_Customizer.makeStringIntoTitle(getApplicationContext(),
-									R.string.yes), new DialogInterface.OnClickListener() {
-
-								public void onClick(DialogInterface dialog, int which) {
-									try {
-										Log.d("Connection", "connection closed");
-									} catch (Exception e) {
-										Log.d("Connection", e.toString());
-									}
-
-									Intent closeAllActivities = new Intent(
-											getApplicationContext(), Login_Activity.class);
-									closeAllActivities.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-											| Intent.FLAG_ACTIVITY_CLEAR_TASK);
-									startActivity(closeAllActivities);
-									mNotificationManager.cancelAll();
-								}
-							})
-					.setNegativeButton(
-							TitleFont_Customizer.makeStringIntoTitle(getApplicationContext(),
-									R.string.no), new DialogInterface.OnClickListener() {
-
-								public void onClick(DialogInterface dialog, int which) {
-									dialog.dismiss();
-								}
-							}).show();
-		}
-		return super.onKeyDown(keyCode, event);
 	}
 
 	@Override

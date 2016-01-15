@@ -5,10 +5,6 @@ package com.cura.database;
  * preferences plus the Favorite commands from the Terminal.
  */
 
-import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -18,245 +14,305 @@ import android.util.Log;
 
 import com.cura.classes.Server;
 
+import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
+
 public class DBHelper extends SQLiteOpenHelper {
-	public static final String databaseName = "userInfo.db";
-	public static final int version = 3;
-	public static final String SERVER_TABLE = "server";
-	public static final String S_ID = "id";
-	public static final String S_USERNAME = "username";
-	public static final String S_DOMAIN = "domain";
-	public static final String S_PORT = "port";
-	public static final String S_PASSWORD = "password";
-	public static final String S_PRIVATEKEY = "private_key";
-	public static final String S_PASSPHRASE = "passphrase";
+    public static final String databaseName = "userInfo.db";
+    public static final int version = 4;
+    public static final String SERVER_TABLE = "server";
+    public static final String SPARE_SERVER_TABLE = "server_spare";
+    public static final String S_ID = "id";
+    public static final String S_USERNAME = "username";
+    public static final String S_DOMAIN = "domain";
+    public static final String S_PORT = "port";
+    public static final String S_PASSWORD = "password";
+    public static final String S_PRIVATEKEY = "private_key";
+    public static final String S_PASSPHRASE = "passphrase";
+    public static final String S_ORDER = "server_order";
 
-	private List<Server> servers;
+    private List<Server> servers;
 
-	private File CuraDir, SyslogDir, NmapDir;
-	Context context;
+    private File CuraDir, SyslogDir;
+    Context context;
 
-	public DBHelper(Context context) {
-		super(context, databaseName, null, version);
-		this.context = context;
-	}
+    public DBHelper(Context context) {
+        super(context, databaseName, null, version);
+        this.context = context;
+    }
 
-	@Override
-	public void onCreate(SQLiteDatabase db) {
-		String CREATE_SERVER_TABLE = "CREATE TABLE IF NOT EXISTS " + SERVER_TABLE
-				+ " (" + S_USERNAME + " TEXT, " + S_DOMAIN + " TEXT, " + S_PORT
-				+ " INTEGER, " + S_PASSWORD + " TEXT, " + S_PRIVATEKEY + " TEXT, "
-				+ S_PASSPHRASE + " TEXT)";
-		db.execSQL(CREATE_SERVER_TABLE);
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        String CREATE_SERVER_TABLE = "CREATE TABLE IF NOT EXISTS " + SERVER_TABLE
+                + " (id INTEGER PRIMARY KEY, " + S_USERNAME + " TEXT, " + S_DOMAIN + " TEXT, " + S_PORT
+                + " INTEGER, " + S_PASSWORD + " TEXT, " + S_PRIVATEKEY + " TEXT, "
+                + S_PASSPHRASE + " TEXT, " + S_ORDER + " INTEGER)";
+        db.execSQL(CREATE_SERVER_TABLE);
 
-		CuraDir = new File("/sdcard/Cura");
-		CuraDir.mkdir();
-		SyslogDir = new File("/sdcard/Cura/SysLog");
-		SyslogDir.mkdir();
-		NmapDir = new File("/sdcard/Cura/Nmap");
-		NmapDir.mkdir();
-	}
+        CuraDir = new File("/sdcard/Cura");
+        CuraDir.mkdir();
+        SyslogDir = new File("/sdcard/Cura/SysLog");
+        SyslogDir.mkdir();
+    }
 
-	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		switch (newVersion) {
-		case 2:
-			Log.d("DB", "Renaming table to Server");
-			db.execSQL("ALTER TABLE user RENAME TO " + SERVER_TABLE);
-			Log.d("DB", "Adding column to newly renamed table");
-			db.execSQL("ALTER TABLE server ADD COLUMN password varchar(100)");
-			Log.d("DB", "Dropping command table");
-			db.execSQL("DROP TABLE commandTable");
-			Log.d("DB", "Done upgrading to v2");
-			break;
-		case 3:
-			// fix for servers constructed with V_2.7's constructor (without
-			// privatekey
-			// and passphrase)
-			db.execSQL("ALTER TABLE server ADD COLUMN private_key varchar(100)");
-			db.execSQL("ALTER TABLE server ADD COLUMN passphrase varchar(100)");
-			servers = getAllServersForUpgrade(db);
-			for (int i = 0; i < servers.size(); i++)
-				clearServerKeys(servers.get(i).getUsername(), servers.get(i)
-						.getDomain());
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        switch (newVersion) {
+            case 2:
+                Log.d("DB", "Renaming table to Server");
+                db.execSQL("ALTER TABLE user RENAME TO " + SERVER_TABLE);
+                Log.d("DB", "Adding column to newly renamed table");
+                db.execSQL("ALTER TABLE server ADD COLUMN password varchar(100)");
+                Log.d("DB", "Dropping command table");
+                db.execSQL("DROP TABLE commandTable");
+                Log.d("DB", "Done upgrading to v2");
+                break;
+            case 3:
+                // fix for servers constructed with V_2.7's constructor (without
+                // privatekey
+                // and passphrase)
+                db.execSQL("ALTER TABLE server ADD COLUMN private_key varchar(100)");
+                db.execSQL("ALTER TABLE server ADD COLUMN passphrase varchar(100)");
+                servers = getAllServersForUpgrade(db);
+                for (Server server : servers)
+                    clearServerKeys(server.getId());
 
-			Log.d("DB", "Done upgrading to v3");
-			break;
-		}
-	}
+                Log.d("DB", "Done upgrading to v3");
+                break;
+            case 4:
+                String CREATE_SERVER_SPARE_TABLE = "CREATE TABLE IF NOT EXISTS " + SPARE_SERVER_TABLE
+                        + " (id INTEGER PRIMARY KEY, " + S_USERNAME + " TEXT, " + S_DOMAIN + " TEXT, " + S_PORT
+                        + " INTEGER, " + S_PASSWORD + " TEXT, " + S_PRIVATEKEY + " TEXT, "
+                        + S_PASSPHRASE + " TEXT, " + S_ORDER + " INTEGER)";
+                db.execSQL(CREATE_SERVER_SPARE_TABLE);
+                List<Server> servers = getAllServersForUpgrade(db);
+                ContentValues cv;
+                for (Server server : servers) {
+                    cv = new ContentValues();
+                    cv.put(S_USERNAME, server.getUsername());
+                    cv.put(S_DOMAIN, server.getDomain());
+                    cv.put(S_PORT, server.getPort());
+                    cv.put(S_PASSWORD, "");
+                    cv.put(S_PRIVATEKEY, server.getPrivateKey());
+                    cv.put(S_PASSPHRASE, server.getPassphrase());
+                    cv.put(S_ORDER, 0);
 
-	public void createServer(Server server) {
-		SQLiteDatabase dbHandler = this.getWritableDatabase();
-		ContentValues cv;
+                    db.insert(SPARE_SERVER_TABLE, null, cv);
+                }
+                db.execSQL("DROP TABLE " + SERVER_TABLE);
+                db.execSQL("ALTER TABLE " + SPARE_SERVER_TABLE + " RENAME TO " + SERVER_TABLE);
 
-		cv = new ContentValues();
-		cv.put(S_USERNAME, server.getUsername());
-		cv.put(S_DOMAIN, server.getDomain());
-		cv.put(S_PORT, server.getPort());
-		cv.put(S_PASSWORD, "");
-		cv.put(S_PRIVATEKEY, server.getPrivateKey());
-		cv.put(S_PASSPHRASE, server.getPassphrase());
-		dbHandler.insert(SERVER_TABLE, null, cv);
-		dbHandler.close();
-	}
+                break;
+        }
+    }
 
-	public List<Server> getAllServersForUpgrade(SQLiteDatabase dbHandler) {
-		List<Server> servers = new LinkedList<Server>();
 
-		String query = "SELECT * FROM " + SERVER_TABLE;
-		Cursor cursor = dbHandler.rawQuery(query, null);
-		Server server = null;
-		if (cursor.moveToFirst()) {
-			do {
-				server = new Server(cursor.getString(0), cursor.getString(1),
-						Integer.parseInt(cursor.getString(2)), cursor.getString(3),
-						cursor.getString(4), cursor.getString(5));
-				servers.add(server);
-			} while (cursor.moveToNext());
-		}
+    public List<Server> getAllServersForUpgrade(SQLiteDatabase dbHandler) {
+        List<Server> servers = new LinkedList<Server>();
 
-		cursor.close();
+        String query = "SELECT * FROM " + SERVER_TABLE;
+        Cursor cursor = dbHandler.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                Server server = new Server();
+                server.setUsername(cursor.getString(0));
+                server.setDomain(cursor.getString(1));
+                server.setPort(cursor.getInt(2));
+                server.setPassword(cursor.getString(3));
+                server.setPrivateKey(cursor.getString(4));
+                server.setPassphrase(cursor.getString(5));
 
-		return servers;
-	}
+                servers.add(server);
+            } while (cursor.moveToNext());
+        }
 
-	public List<Server> getAllServers() {
-		SQLiteDatabase dbHandler = this.getReadableDatabase();
-		List<Server> servers = new LinkedList<Server>();
+        cursor.close();
 
-		String query = "SELECT * FROM " + SERVER_TABLE;
-		Cursor cursor = dbHandler.rawQuery(query, null);
-		Server server = null;
-		if (cursor.moveToFirst()) {
-			do {
-				server = new Server(cursor.getString(0), cursor.getString(1),
-						Integer.parseInt(cursor.getString(2)), cursor.getString(3),
-						cursor.getString(4), cursor.getString(5));
-				servers.add(server);
-			} while (cursor.moveToNext());
-		}
+        return servers;
+    }
 
-		cursor.close();
-		dbHandler.close();
+    public List<Server> getAllServers() {
+        SQLiteDatabase dbHandler = this.getReadableDatabase();
+        List<Server> servers = new LinkedList<Server>();
 
-		return servers;
-	}
+        String query = "SELECT * FROM " + SERVER_TABLE + " ORDER BY "
+                + S_ORDER;
+        Cursor cursor = dbHandler.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                Server server = new Server();
+                server.setId(cursor.getInt(0));
+                server.setUsername(cursor.getString(1));
+                server.setDomain(cursor.getString(2));
+                server.setPort(cursor.getInt(3));
+                server.setPassword(cursor.getString(4));
+                server.setPrivateKey(cursor.getString(5));
+                server.setPassphrase(cursor.getString(6));
+                server.setOrder(cursor.getInt(7));
 
-	public void modifyServer(Server server, String usernameCode, String domainCode) {
-		SQLiteDatabase dbHandler = this.getWritableDatabase();
-		ContentValues values = new ContentValues();
+                servers.add(server);
+            } while (cursor.moveToNext());
+        }
 
-		values.put(S_USERNAME, server.getUsername());
-		values.put(S_DOMAIN, server.getDomain());
-		values.put(S_PORT, server.getPort());
-		values.put(S_PRIVATEKEY, server.getPrivateKey());
-		values.put(S_PASSPHRASE, server.getPassphrase());
+        cursor.close();
+        dbHandler.close();
 
-		String where = S_USERNAME + " = ? AND " + S_DOMAIN + " = ?";
-		String[] whereArgs = { usernameCode, domainCode };
-		try {
-			dbHandler.update(SERVER_TABLE, values, where, whereArgs);
-		} catch (Exception e) {
-			Log.d("SQL", e.toString());
-		}
+        return servers;
+    }
 
-		dbHandler.close();
-	}
+    public void createServer(Server server) {
+        SQLiteDatabase dbHandler = this.getWritableDatabase();
+        ContentValues cv;
 
-	public void deleteServer(String usernameCode, String domainCode) {
-		SQLiteDatabase dbHandler = this.getWritableDatabase();
-		try {
-			String where = S_USERNAME + " = ? AND " + S_DOMAIN + " = ?";
-			String[] whereArgs = { usernameCode, domainCode };
-			dbHandler.delete(SERVER_TABLE, where, whereArgs);
+        cv = new ContentValues();
+        cv.put(S_USERNAME, server.getUsername());
+        cv.put(S_DOMAIN, server.getDomain());
+        cv.put(S_PORT, server.getPort());
+        cv.put(S_PASSWORD, "");
+        cv.put(S_PRIVATEKEY, server.getPrivateKey());
+        cv.put(S_PASSPHRASE, server.getPassphrase());
+        cv.put(S_ORDER, server.getOrder());
+        dbHandler.insert(SERVER_TABLE, null, cv);
+        dbHandler.close();
+    }
 
-		} catch (Exception e) {
-			Log.d("SQL", e.toString());
-		}
-		dbHandler.close();
-	}
+    public void modifyServer(Server server, int server_id) {
+        SQLiteDatabase dbHandler = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
 
-	public void savePasswordOrModifyExisting(String password,
-			String usernameCode, String domainCode) {
-		SQLiteDatabase dbHandler = this.getWritableDatabase();
-		ContentValues newValues = new ContentValues();
+        values.put(S_USERNAME, server.getUsername());
+        values.put(S_DOMAIN, server.getDomain());
+        values.put(S_PORT, server.getPort());
+        values.put(S_PRIVATEKEY, server.getPrivateKey());
+        values.put(S_PASSPHRASE, server.getPassphrase());
 
-		newValues.put(S_PASSWORD, password);
+        String where = S_ID + " = ?";
+        String[] whereArgs = new String[]{String.valueOf(server_id)};
+        try {
+            dbHandler.update(SERVER_TABLE, values, where, whereArgs);
+        } catch (Exception e) {
+            Log.d("SQL", e.toString());
+        }
 
-		String where = S_USERNAME + " = ? AND " + S_DOMAIN + " = ?";
-		String[] whereArgs = { usernameCode, domainCode };
-		dbHandler.update(SERVER_TABLE, newValues, where, whereArgs);
-		dbHandler.close();
-	}
+        dbHandler.close();
+    }
 
-	public void savePassphrase(String passphrase, String usernameCode,
-			String domainCode) {
-		SQLiteDatabase dbHandler = this.getWritableDatabase();
-		ContentValues newValues = new ContentValues();
+    public void deleteServer(int server_id) {
+        SQLiteDatabase dbHandler = this.getWritableDatabase();
+        try {
+            String where = S_ID + " = ?";
+            String[] whereArgs = new String[]{String.valueOf(server_id)};
+            dbHandler.delete(SERVER_TABLE, where, whereArgs);
 
-		newValues.put(S_PASSPHRASE, passphrase);
+        } catch (Exception e) {
+            Log.d("SQL", e.toString());
+        }
+        dbHandler.close();
+    }
 
-		String where = S_USERNAME + " = ? AND " + S_DOMAIN + " = ?";
-		String[] whereArgs = { usernameCode, domainCode };
-		dbHandler.update(SERVER_TABLE, newValues, where, whereArgs);
-		dbHandler.close();
-	}
+    public void savePasswordOrModifyExisting(String password,
+                                             int server_id) {
+        SQLiteDatabase dbHandler = this.getWritableDatabase();
+        ContentValues newValues = new ContentValues();
 
-	public String getPrivatekeyPassphrase(String usernameCode, String domainCode) {
-		SQLiteDatabase dbHandler = this.getReadableDatabase();
-		String query = "SELECT " + S_PASSPHRASE + " FROM " + SERVER_TABLE
-				+ " WHERE " + S_USERNAME + " = " + "\"" + usernameCode + "\"" + " AND "
-				+ S_DOMAIN + " = " + "\"" + domainCode + "\"";
-		Cursor cursor = dbHandler.rawQuery(query, null);
+        newValues.put(S_PASSWORD, password);
 
-		String password = null;
+        String where = S_ID + " = ?";
+        String[] whereArgs = new String[]{String.valueOf(server_id)};
+        dbHandler.update(SERVER_TABLE, newValues, where, whereArgs);
+        dbHandler.close();
+    }
 
-		if (cursor.moveToFirst()) {
-			if (cursor.getString(0) == null) {
-				password = null;
-			} else {
-				password = cursor.getString(0);
-			}
-		}
+    public void savePassphrase(String passphrase, int server_id) {
+        SQLiteDatabase dbHandler = this.getWritableDatabase();
+        ContentValues newValues = new ContentValues();
 
-		cursor.close();
-		dbHandler.close();
+        newValues.put(S_PASSPHRASE, passphrase);
 
-		return password;
-	}
+        String where = S_ID + " = ?";
+        String[] whereArgs = new String[]{String.valueOf(server_id)};
+        dbHandler.update(SERVER_TABLE, newValues, where, whereArgs);
+        dbHandler.close();
+    }
 
-	public void clearServerKeys(String usernameCode, String domainCode) {
-		SQLiteDatabase dbHandler = this.getWritableDatabase();
-		ContentValues newValues = new ContentValues();
+    public String getPrivatekeyPassphrase(int server_id) {
+        SQLiteDatabase dbHandler = this.getReadableDatabase();
+        String query = "SELECT " + S_PASSPHRASE + " FROM " + SERVER_TABLE
+                + " WHERE " + S_ID + " = " + server_id;
+        Cursor cursor = dbHandler.rawQuery(query, null);
 
-		newValues.put(S_PRIVATEKEY, "");
-		newValues.putNull(S_PASSPHRASE);
+        String password = null;
 
-		String where = S_USERNAME + " = ? AND " + S_DOMAIN + " = ?";
-		String[] whereArgs = { usernameCode, domainCode };
-		dbHandler.update(SERVER_TABLE, newValues, where, whereArgs);
-		dbHandler.close();
-	}
+        if (cursor.moveToFirst()) {
+            if (cursor.getString(0) == null) {
+                password = null;
+            } else {
+                password = cursor.getString(0);
+            }
+        }
 
-	public String getServerPassword(String usernameCode, String domainCode) {
-		SQLiteDatabase dbHandler = this.getReadableDatabase();
-		String query = "SELECT " + S_PASSWORD + " FROM " + SERVER_TABLE + " WHERE "
-				+ S_USERNAME + " = " + "\"" + usernameCode + "\"" + " AND " + S_DOMAIN
-				+ " = " + "\"" + domainCode + "\"";
-		Cursor cursor = dbHandler.rawQuery(query, null);
+        cursor.close();
+        dbHandler.close();
 
-		String password = "";
+        return password;
+    }
 
-		if (cursor.moveToFirst()) {
-			if (cursor.getString(0) == null) {
-				password = "";
-			} else {
-				password = cursor.getString(0);
-			}
-		}
+    public void clearServerKeys(int server_id) {
+        SQLiteDatabase dbHandler = this.getWritableDatabase();
+        ContentValues newValues = new ContentValues();
 
-		cursor.close();
-		dbHandler.close();
+        newValues.put(S_PRIVATEKEY, "");
+        newValues.putNull(S_PASSPHRASE);
 
-		return password;
-	}
+        String where = S_ID + " = ?";
+        String[] whereArgs = new String[]{String.valueOf(server_id)};
+        dbHandler.update(SERVER_TABLE, newValues, where, whereArgs);
+        dbHandler.close();
+    }
+
+    public void initializeOrderField(SQLiteDatabase dbHandler, int server_id) {
+        ContentValues newValues = new ContentValues();
+
+        newValues.put(S_ORDER, 0);
+
+        String where = "rowid = ?";
+        String[] whereArgs = new String[]{String.valueOf(server_id)};
+        dbHandler.update(SERVER_TABLE, newValues, where, whereArgs);
+    }
+
+    public void updateServerOrder(int server_order, int server_id) {
+        SQLiteDatabase dbHandler = this.getWritableDatabase();
+
+        ContentValues newValues = new ContentValues();
+
+        newValues.put(S_ORDER, server_order);
+
+        String where = S_ID + " = ?";
+        String[] whereArgs = new String[]{String.valueOf(server_id)};
+        dbHandler.update(SERVER_TABLE, newValues, where, whereArgs);
+        dbHandler.close();
+    }
+
+    public String getServerPassword(int server_id) {
+        SQLiteDatabase dbHandler = this.getReadableDatabase();
+        String query = "SELECT " + S_PASSWORD + " FROM " + SERVER_TABLE + " WHERE "
+                + S_ID + " = " + server_id;
+        Cursor cursor = dbHandler.rawQuery(query, null);
+
+        String password = "";
+
+        if (cursor.moveToFirst()) {
+            if (cursor.getString(0) == null) {
+                password = "";
+            } else {
+                password = cursor.getString(0);
+            }
+        }
+
+        cursor.close();
+        dbHandler.close();
+
+        return password;
+    }
 }

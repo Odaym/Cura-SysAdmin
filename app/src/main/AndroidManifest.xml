@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cura"
-    android:installLocation="internalOnly"
-    android:versionCode="24"
-    android:versionName="2.8" >
-
-    <uses-sdk
-        android:minSdkVersion="11"
-        android:targetSdkVersion="19" />
+    android:installLocation="preferExternal"
+    android:versionCode="26"
+    android:versionName="2.9">
 
     <uses-permission android:name="android.permission.WRITE_OWNER_DATA" />
     <uses-permission android:name="android.permission.READ_OWNER_DATA" />
@@ -21,12 +17,12 @@
     <application
         android:icon="@drawable/cura_app_icon"
         android:label="@string/app_name"
-        android:theme="@style/CustomActionBarTheme" >
+        android:theme="@style/CustomActionBarTheme">
         <activity android:name="net.hockeyapp.android.UpdateActivity" />
         <activity
             android:name="com.cura.main.Login_Activity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.DeviceDefault" >
+            android:theme="@android:style/Theme.DeviceDefault">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,48 +30,28 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.cura.main.AccountsList_Activity"
-            android:theme="@android:style/Theme.DeviceDefault.Dialog" >
-            <intent-filter>
-                <action android:name="cura.connected" />
-                <action android:name="cura.notConnected" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name="com.cura.main.Preference_Screen"
-            android:theme="@android:style/Theme.DeviceDefault" >
-        </activity>
+            android:theme="@android:style/Theme.DeviceDefault"/>
         <activity
-            android:name="com.cura.about.About_Activity"
-            android:theme="@android:style/Theme.DeviceDefault" >
-        </activity>
+            android:name="com.cura.main.Select_Server_Activity"
+            android:theme="@android:style/Theme.DeviceDefault"/>
         <activity
-            android:name="com.cura.main.Main_Activity"
+            android:name=".main.Server_Home_Activity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.DeviceDefault" >
-        </activity>
-        <activity android:name="com.cura.serverstats.ServerStats_Activity" >
-        </activity>
-        <activity android:name="com.cura.syslog.Syslog_Activity" >
-        </activity>
+            android:theme="@android:style/Theme.DeviceDefault"/>
+        <activity android:name="com.cura.serverstats.ServerStats_Activity"/>
+        <activity android:name="com.cura.syslog.Syslog_Activity"/>
         <activity
             android:name="com.cura.syslog.LogsDialog"
-            android:theme="@android:style/Theme.DeviceDefault.Dialog" >
-        </activity>
-        <activity android:name="com.cura.sysmonitor.SysMonitor_Activity" >
-        </activity>
-        <activity android:name="com.cura.nmap.NMAP_Activity" >
-        </activity>
+            android:theme="@android:style/Theme.DeviceDefault.Dialog"/>
+        <activity android:name="com.cura.sysmonitor.SysMonitor_Activity"/>
         <activity
             android:name="com.cura.terminal.Terminal_Activity"
-            android:configChanges="orientation|keyboardHidden" >
-        </activity>
-        <activity android:name="com.cura.terminal.FavoriteCommandsDialog" >
-        </activity>
+            android:configChanges="orientation|keyboardHidden"/>
 
         <service android:name="com.cura.connection.ConnectionService" />
 
-        <receiver android:name="com.cura.connection.ConnectionBroadcastReceiver" >
+        <receiver android:name="com.cura.connection.ConnectionBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>

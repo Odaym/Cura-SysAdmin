@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layoutRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <com.cura.classes.TypefacedButton
+        android:id="@+id/editServerBTN"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:gravity="start"
+        android:text="@string/editServer"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        custom:typeface="CuraFont" />
+
+    <ImageView
+        android:id="@+id/separator1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editServerBTN"
+        android:scaleType="fitXY"
+        android:src="@android:drawable/divider_horizontal_dark" />
+
+    <com.cura.classes.TypefacedButton
+        android:id="@+id/clearServerKeysBTN"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/separator1"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:gravity="start"
+        android:text="@string/clearKey"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        custom:typeface="CuraFont" />
+
+    <ImageView
+        android:id="@+id/separator2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/clearServerKeysBTN"
+        android:scaleType="fitXY"
+        android:src="@android:drawable/divider_horizontal_dark" />
+
+    <com.cura.classes.TypefacedButton
+        android:id="@+id/deleteServerBTN"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/separator2"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:gravity="start"
+        android:text="@string/deleteServer"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        custom:typeface="CuraFont" />
+
+</RelativeLayout>

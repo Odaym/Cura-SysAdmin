@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingBottom="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:id="@+id/cellAndFrameLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="160dp"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:id="@+id/cellGearSettings"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/gear_settings"
+            android:layout_centerHorizontal="true" />
+
+        <ImageView
+            android:id="@+id/cellFrame"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
+
+
+    </RelativeLayout>
+
+    <com.cura.classes.TypefacedTextView
+        android:id="@+id/usernameSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cellAndFrameLayout"
+        android:layout_centerHorizontal="true"
+        android:maxLines="1"
+        android:gravity="center"
+        android:textColor="@color/white" />
+
+    <com.cura.classes.TypefacedTextView
+        android:id="@+id/domainSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/usernameSubtitle"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textColor="@color/white" />
+</RelativeLayout>
